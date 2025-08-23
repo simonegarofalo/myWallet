@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="./assets/logo.png" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>myWallet</title>
+  </head>
+  <body>
+    <div class="logo">
+      <h1>myWallet</h1>
+      <img src="./assets/logo.png" alt="logo" />
+    </div>
+    <main>
+      <section class="bilancio-wrapper">
+        <h2>BILANCIO TOTALE</h2>
+        <p class="saldo-totale"></p>
+        <div class="bilancio-content">
+          <div class="uscite-content">
+            <p>USCITE</p>
+            <p class="totale-spese"></p>
+          </div>
+          <div class="entrate-content">
+            <p>ENTRATE</p>
+            <p class="totale-entrate"></p>
+          </div>
+        </div>
+      </section>
+      <section class="movimenti-wrapper">
+        <button
+          type="button"
+          id="button-form-uscita"
+          aria-label="Aggiunti uscita"
+        >
+          + Aggiungi uscita
+        </button>
+        <button
+          type="button"
+          id="button-form-entrata"
+          aria-label="Aggiunti entrata"
+        >
+          + Aggiungi entrata
+        </button>
+      </section>
+      <section id="transazioni">
+        <section class="hidden" id="uscita-form">
+          <h3 class="form-title">
+            Aggiungi una nuova <span class="uscita">uscita</span>
+          </h3>
+          <form class="form">
+            <label for="data-uscita"
+              ><span>Seleziona una data:</span
+              ><input type="date" name="data" id="data-uscita"
+            /></label>
+            <label for="categoria-uscita"
+              ><span>Seleziona una categoria:</span>
+              <select name="categoria" id="categoria-uscita">
+                <option value="">Scegli una categoria</option>
+                <option value="cibo">Cibo</option>
+                <option value="trasporti">Trasporti</option>
+                <option value="abbigliamento">Abbigliamento</option>
+                <option value="salute">Salute e benessere</option>
+                <option value="bollette">Bollette</option>
+                <option value="casa">Casa e affitto</option>
+                <option value="viaggi">Viaggi</option>
+                <option value="formazione">Formazione</option>
+                <option value="regali">Regali</option>
+                <option value="altro">Altro</option>
+              </select>
+            </label>
+            <label for="importo-uscita"
+              ><span>Seleziona un importo:</span
+              ><input
+                type="text"
+                name="importo"
+                id="importo-uscita"
+                value=""
+                placeholder="0.00€"
+            /></label>
+            <button type="button" id="aggiungi-uscita" value="button">
+              Aggiungi
+            </button>
+          </form>
+        </section>
+        <section class="hidden" id="entrata-form">
+          <h3 class="form-title">
+            Aggiungi una nuova
+            <span class="entrata">entrata</span>
+          </h3>
+          <form class="form">
+            <label for="data-entrata"
+              ><span>Seleziona una data:</span
+              ><input type="date" name="data" id="data-entrata"
+            /></label>
+            <label for="categoria-entrata"
+              ><span>Seleziona una categoria:</span>
+              <select name="categoria" id="categoria-entrata">
+                <option value="">Scegli una categoria</option>
+                <option value="stipendio">Stipendio</option>
+                <option value="bonus">Bonus</option>
+                <option value="vendite">Vendite</option>
+                <option value="regali">Regali</option>
+                <option value="altro">Altro</option>
+              </select>
+            </label>
+            <label for="importo-entrata"
+              ><span>Seleziona un importo:</span
+              ><input
+                type="text"
+                name="importo"
+                id="importo-entrata"
+                value=""
+                placeholder="0.00€"
+            /></label>
+            <button type="button" id="aggiungi-entrata" value="button">
+              Aggiungi
+            </button>
+          </form>
+        </section>
+      </section>
+      <section class="spese-wrapper">
+        <div class="transazioni-content" id="mostra-transazioni">
+          <h3>Mostra tutte le transazioni</h3>
+          <img
+            id="icon-toggle"
+            src="./assets/icons/arrow-down.svg"
+            alt="arrow-down"
+          />
+        </div>
+        <table class="spese-list hidden"></table>
+      </section>
+    </main>
+    <script src="./index.js"></script>
+  </body>
+</html>

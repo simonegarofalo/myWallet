@@ -8,7 +8,7 @@
 
 ## Demo
 
-This is a static web project. You can preview it locally by opening `index.html` in a browser or see it live here: [Live Demo](https://mywallet.netlify.app/).
+This is a static web project. You can preview it locally by opening `index.html` in a browser or see it live here: [Live Demo](https://app-mywallet.netlify.app/).
 
 ---
 

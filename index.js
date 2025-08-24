@@ -12,7 +12,7 @@ function mostraForm(tipo) {
     if (tipo === "entrata") {
         entrataForm.classList.remove("hidden");
         uscitaForm.classList.add("hidden");
-    } else if (tipo === "uscita") {
+    } else {
         uscitaForm.classList.remove("hidden");
         entrataForm.classList.add("hidden");
     }
@@ -77,15 +77,6 @@ function mostraMovimenti() {
     const lista = $$(".spese-list");
     lista.innerHTML = "";
 
-    if (MOVIMENTI.length === 0) {
-        lista.innerHTML = "<tr><td colspan='4'>Nessuna transazione registrata</td></tr>";
-        return;
-    }
-
-
-    // Sort transactions by date (latest first)
-    MOVIMENTI.sort((a, b) => new Date(b.data) - new Date(a.data));
-
     const thead = document.createElement("thead");
     const headerRow = document.createElement("tr");
     ["Data", "Categoria", "Tipo", "Importo", "Azioni"].forEach(text => {
@@ -96,17 +87,28 @@ function mostraMovimenti() {
     thead.appendChild(headerRow);
     lista.appendChild(thead);
 
+
     const tbody = document.createElement("tbody");
-    MOVIMENTI.forEach(m => tbody.appendChild(creaMovimento(m)));
     lista.appendChild(tbody);
+
+    if (MOVIMENTI.length === 0) {
+        const tr = document.createElement("tr");
+        tr.classList.add("avviso-nessuna-transazione");
+        tr.innerHTML = `<td colspan="5">Non sono presenti transazioni</td>`;
+        tbody.appendChild(tr);
+        return;
+    }
+
+    // Sort transactions by date (latest first)
+    MOVIMENTI.sort((a, b) => new Date(b.data) - new Date(a.data));
+    MOVIMENTI.forEach(m => tbody.appendChild(creaMovimento(m)));
 }
 
 
 // Shows an alert if a required field is empty
 function mostraAlert() {
     const formContainer = $("transazioni");
-    const existingAlert = formContainer.querySelector(".alert-error");
-    if (!existingAlert) {
+    if (!formContainer.querySelector(".alert-error")) {
         const alert = document.createElement("div");
         alert.classList.add("alert-error");
         alert.textContent = "⚠️ Tutti i campi sono obbligatori";
@@ -121,10 +123,7 @@ function aggiornaTotali() {
     let totaleEntrate = 0;
     let totaleUscite = 0;
 
-    MOVIMENTI.forEach(m => {
-        if (m.tipo === "entrata") totaleEntrate += m.importo;
-        else totaleUscite += m.importo;
-    });
+    MOVIMENTI.forEach(m => m.tipo === "entrata" ? totaleEntrate += m.importo : totaleUscite += m.importo);
 
     $$(".totale-entrate").textContent = "+ " + totaleEntrate.toFixed(2) + " €";
     $$(".totale-spese").textContent = "- " + totaleUscite.toFixed(2) + " €";
@@ -134,9 +133,9 @@ function aggiornaTotali() {
 
 // Generates a unique ID for each transaction using the modern crypto.randomUUID() method if available
 function generateId() {
-    if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+    if (window.crypto && typeof window.crypto.randomUUID === 'function')
     return crypto.randomUUID();
-    }
+
     return Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
     }
 
@@ -158,7 +157,7 @@ function aggiungiMovimento(tipo) {
         }
 
     const nuovoMovimento = {
-        id: transazioneID,
+        id: generateId(),
         tipo: tipo,
         importo: valoreImporto,
         categoria: valoreCategoria,
@@ -168,11 +167,7 @@ function aggiungiMovimento(tipo) {
     MOVIMENTI.push(nuovoMovimento);
     salvaMovimenti();
     aggiornaTotali();
-
-    // Append only the new row to the table for performance
-    const tbody = $$(".spese-list tbody") || document.createElement("tbody");
-    tbody.appendChild(creaMovimento(nuovoMovimento));
-    if (!$$(".spese-list tbody")) $$(".spese-list").appendChild(tbody);
+    mostraMovimenti();
 
     importoEl.value = "";
     categoriaEl.value = "";
@@ -185,51 +180,44 @@ $("aggiungi-entrata").addEventListener("click", () => aggiungiMovimento("entrata
 
 // Shows a confirmation dialog and removes a transaction if confirmed, updating only the affected row
 function eliminaMovimento(id) {
-    if (typeof id !== "string") {
-        console.log("ID non valido!");
-        return;
-    }
+    if (typeof id !== "string") return;
 
     const boxTransazioni = $$(".spese-list");
-    const removeAlert = boxTransazioni.querySelector(".remove-transaction-alert");
-    if (!removeAlert) {
-        const alert = document.createElement("div");
-        alert.classList.add("remove-transaction-alert");
-        alert.setAttribute("role", "alertdialog");
-        alert.setAttribute("aria-modal", "true");
-        alert.textContent = "Confermi di voler rimuovere la transazione?";
+    if (boxTransazioni.querySelector(".remove-transaction-alert")) return;
 
-        const btnWrapper = document.createElement("div");
-        btnWrapper.classList.add("buttons-wrapper");
-        const btnConferma = document.createElement("button");
-        btnConferma.setAttribute("aria-label", "Conferma eliminazione");
-        btnConferma.textContent = "Conferma";
-        const btnAnnulla = document.createElement("button");
-        btnAnnulla.classList.add("secondary-button");
-        btnAnnulla.setAttribute("aria-label", "Annulla eliminazione");
-        btnAnnulla.textContent = "Annulla";
+    const alert = document.createElement("div");
+    alert.classList.add("remove-transaction-alert");
+    alert.setAttribute("role", "alertdialog");
+    alert.setAttribute("aria-modal", "true");
+    alert.textContent = "Confermi di voler rimuovere la transazione?";
 
-        btnWrapper.appendChild(btnConferma);
-        btnWrapper.appendChild(btnAnnulla);
-        alert.appendChild(btnWrapper);
-        boxTransazioni.appendChild(alert);
+    const btnWrapper = document.createElement("div");
+    btnWrapper.classList.add("buttons-wrapper");
+    const btnConferma = document.createElement("button");
+    btnConferma.setAttribute("aria-label", "Conferma eliminazione");
+    btnConferma.textContent = "Conferma";
+    const btnAnnulla = document.createElement("button");
+    btnAnnulla.classList.add("secondary-button");
+    btnAnnulla.setAttribute("aria-label", "Annulla eliminazione");
+    btnAnnulla.textContent = "Annulla";
 
-        btnConferma.addEventListener("click", () => {
-            const index = MOVIMENTI.findIndex(m => m.id === id);
-            if (index !== -1) {
-                MOVIMENTI.splice(index, 1);
-                salvaMovimenti();
-                aggiornaTotali();
+    btnWrapper.appendChild(btnConferma);
+    btnWrapper.appendChild(btnAnnulla);
+    alert.appendChild(btnWrapper);
+    boxTransazioni.appendChild(alert);
 
-                // Remove only the corresponding row
-                const tr = document.querySelector(`.spese-list tr[data-id="${id}"]`);
-                if (tr) tr.remove();
-            }
-            alert.remove();
-        });
+    btnConferma.addEventListener("click", () => {
+        const index = MOVIMENTI.findIndex(m => m.id === id);
+        if (index !== -1) {
+            MOVIMENTI.splice(index, 1);
+            salvaMovimenti();
+            aggiornaTotali();
+            mostraMovimenti();
+        }
+        alert.remove();
+    });
 
-        btnAnnulla.addEventListener("click", () => alert.remove());
-    }
+    btnAnnulla.addEventListener("click", () => alert.remove());
 }
 
 // Saves the current state of the MOVIMENTI array into localStorage

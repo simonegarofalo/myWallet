@@ -13,14 +13,14 @@
 body {
   font-family: "Lato", sans-serif;
 }
+h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0.8rem;
+}
 li,
 a {
   list-style: none;
   text-decoration: none;
-}
-h2 {
-  font-size: 1.2rem;
-  margin-bottom: 0.8rem;
 }
 .hidden {
   display: none;
@@ -32,10 +32,10 @@ section h3 {
   text-align: center;
 }
 button {
-  height: 2.3rem;
+  height: 2.5rem;
   background-color: #000000;
   color: #ffffff;
-  padding: 0.5rem 0.8rem;
+  padding: 0.5rem 1rem;
   border-radius: 25px;
   border: 1px solid black;
   cursor: pointer;
@@ -58,8 +58,8 @@ button:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.3rem;
   font-size: 1rem;
+  gap: 0.3rem;
   margin: 1.5rem 0 3rem 0;
 }
 .logo img {
@@ -90,7 +90,7 @@ main {
 .bilancio-content {
   display: flex;
   justify-content: center;
-  gap: 5rem;
+  gap: 5.5rem;
 
   margin-top: 2rem;
 }
@@ -127,12 +127,12 @@ form {
 .form select,
 .form textarea {
   width: 100%;
-  height: 2.3rem;
+  height: 2.5rem;
   padding: 0.5rem 1rem;
   border: 1px solid #ddd;
   border-radius: 8px;
   font-family: "Lato", sans-serif;
-  font-size: 0.8rem;
+  font-size: 1rem;
   transition: all 0.3s ease;
   background-color: #fff;
   appearance: none;
@@ -154,6 +154,7 @@ form {
   cursor: pointer;
 }
 label span {
+  font-size: 1.1rem;
   margin-left: 0.5rem;
 }
 .alert-error {

@@ -89,6 +89,7 @@ All transactions are stored as an array in `localStorage` under the `MOVIMENTI` 
 
 ## Future improvements
 
+- Add a feature to sort transactions by date, amount, category, or type.
 - Refactor the project using a front-end framework (maybe Astro or React) for better scalability.
 - Integrate a backend with Node.js, Express and MySQL.
 

@@ -69,15 +69,19 @@
                 <option value="altro">Altro</option>
               </select>
             </label>
-            <label for="importo-uscita"
-              ><span>Seleziona un importo:</span
-              ><input
-                type="text"
+            <label for="importo-uscita">
+              <span>Seleziona un importo:</span>
+              <input
+                type="number"
+                inputmode="decimal"
                 name="importo"
                 id="importo-uscita"
                 value=""
-                placeholder="0.00€"
-            /></label>
+                placeholder="0.00"
+                step="0.01"
+                min="0"
+              />
+            </label>
             <button type="button" id="aggiungi-uscita" value="button">
               Aggiungi
             </button>
@@ -104,15 +108,19 @@
                 <option value="altro">Altro</option>
               </select>
             </label>
-            <label for="importo-entrata"
-              ><span>Seleziona un importo:</span
-              ><input
-                type="text"
+            <label for="importo-entrata">
+              <span>Seleziona un importo:</span>
+              <input
+                type="number"
+                inputmode="decimal"
                 name="importo"
                 id="importo-entrata"
                 value=""
-                placeholder="0.00€"
-            /></label>
+                placeholder="0.00"
+                step="0.01"
+                min="0"
+              />
+            </label>
             <button type="button" id="aggiungi-entrata" value="button">
               Aggiungi
             </button>

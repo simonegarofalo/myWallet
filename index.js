@@ -1,8 +1,9 @@
 const MOVIMENTI = [];
 
-// Utility functions for selecting elements
+// Utility functions
 const $ = selector => document.getElementById(selector);
 const $$ = selector => document.querySelector(selector);
+
 
 // Shows the "Income" form and hides the "Expense" form, or vice versa, based on button clicks
 function mostraForm(tipo) {
@@ -23,22 +24,20 @@ $("button-form-entrata").addEventListener('click', () => mostraForm("entrata"));
 $("button-form-uscita").addEventListener('click', () => mostraForm("uscita"));
 
 
-// Restrict input to a max of 4 digits before the decimal and 2 after, replacing commas with dots and removing invalid characters
-function controllaImporto(input) {
-    input.addEventListener("input", () => {
-        input.value = input.value
-            .replace(",", ".")
-            .replace(/[^0-9.]/g, "")
-            .replace(/^(\d{0,4})(\.\d{0,2})?.*$/, "$1$2");
+// Ensures that amount inputs are consistently formatted with 2 decimal places.
+function formatOnBlur(input) {
+    input.addEventListener("blur", () => {
+        const value = parseFloat(input.value);
+        if (!isNaN(value) && value > 0) {
+            input.value = value.toFixed(2);
+        } else {
+            input.value = "";
+        }
     });
 }
 
-// Apply validation to income and expense input fields
-const importoUscita = $("importo-uscita");
-const importoEntrata = $("importo-entrata");
-
-controllaImporto(importoUscita);
-controllaImporto(importoEntrata);
+formatOnBlur($("importo-uscita"));
+formatOnBlur($("importo-entrata"));
 
 
 // Creates and returns a <tr> element representing a single transaction
@@ -71,7 +70,6 @@ function creaMovimento(m) {
     return tr;
 }
 
-
 // Initially renders all transactions when loading the page
 function mostraMovimenti() {
     const lista = $$(".spese-list");
@@ -86,7 +84,6 @@ function mostraMovimenti() {
     });
     thead.appendChild(headerRow);
     lista.appendChild(thead);
-
 
     const tbody = document.createElement("tbody");
     lista.appendChild(tbody);
@@ -134,10 +131,9 @@ function aggiornaTotali() {
 // Generates a unique ID for each transaction using the modern crypto.randomUUID() method if available
 function generateId() {
     if (window.crypto && typeof window.crypto.randomUUID === 'function')
-    return crypto.randomUUID();
-
+        return crypto.randomUUID();
     return Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
-    }
+}
 
 
 // Adds a new transaction, updates totals, and appends only the new row to the table for better performance
@@ -147,14 +143,14 @@ function aggiungiMovimento(tipo) {
     const categoriaEl = $(`categoria-${tipo}`);
     const dataEl = $(`data-${tipo}`);
 
-    const valoreImporto = parseFloat(importoEl.value.replace(',', '.'));
+    const valoreImporto = parseFloat(importoEl.value);
     const valoreCategoria = categoriaEl.value;
     const valoreData = dataEl.value;
 
     if (isNaN(valoreImporto) || valoreImporto <= 0 || !valoreCategoria || !valoreData) {
         mostraAlert();
         return;
-        }
+    }
 
     const nuovoMovimento = {
         id: generateId(),
@@ -220,13 +216,12 @@ function eliminaMovimento(id) {
     btnAnnulla.addEventListener("click", () => alert.remove());
 }
 
+
 // Saves the current state of the MOVIMENTI array into localStorage
 function salvaMovimenti() {
     localStorage.setItem("movimenti", JSON.stringify(MOVIMENTI));
 }
 
-
-// Loads transactions from localStorage when the app starts
 function caricaMovimenti() {
     const dati = JSON.parse(localStorage.getItem("movimenti")) || [];
     MOVIMENTI.length = 0;

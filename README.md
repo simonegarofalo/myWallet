@@ -2,7 +2,7 @@
 
 # myWallet
 
-**Simple personal finance tracker** — a small web app built with plain HTML, CSS and JavaScript. It lets the user add income and expenses, stores them in `localStorage`, shows totals and a transaction list, and supports deleting items.
+**Simple personal finance tracker**. A small web app built with plain HTML, CSS and JavaScript. It lets the user add income and expenses, stores them in `localStorage`, shows totals and a transaction list, and supports deleting items.
 
 ---
 

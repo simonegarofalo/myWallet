@@ -36,11 +36,12 @@ section h3 {
 }
 button {
   height: 2.5rem;
+  width: 10rem;
   font-size: 1rem;
   background-color: #000000;
   color: #ffffff;
   padding: 0.5rem 1rem;
-  border-radius: 25px;
+  border-radius: 8px;
   border: 1px solid black;
   cursor: pointer;
   box-shadow: var(--shadow);
@@ -74,32 +75,37 @@ button:hover {
 /* Main */
 main {
   width: 100%;
+  min-height: 70svh;
   display: flex;
-  justify-content: center;
   flex-direction: column;
   align-items: center;
   gap: 2rem;
   padding: 0 16px;
 }
-.bilancio-wrapper {
+.balance-wrapper {
   width: 100%;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
 }
-.saldo-totale {
+.total-balance {
   font-size: 3rem;
+  font-weight: bold;
 }
-.bilancio-content {
+.balance-content {
+  width: 100%;
   display: flex;
   justify-content: center;
-  gap: 6.5rem;
-
+  gap: 3rem;
   margin-top: 2rem;
 }
-.entrate-content,
-.uscite-content {
+.expenses-category,
+.income-category {
+  color: #999;
+}
+.income-content,
+.expenses-content {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -107,14 +113,14 @@ main {
 }
 
 /* Movimenti */
-.movimenti-wrapper {
+.transactions-wrapper {
   display: flex;
   justify-content: center;
   gap: 1rem;
 }
 
 /* Form */
-#transazioni {
+#transactions {
   position: relative;
 }
 .form-title {
@@ -161,11 +167,12 @@ form {
 }
 label span {
   font-size: 1.1rem;
+  line-height: 2rem;
   margin-left: 0.5rem;
 }
 .alert-error {
   width: auto;
-  height: 100px;
+  height: auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -185,7 +192,7 @@ label span {
 #icon-toggle {
   transition: transform 0.3s ease;
 }
-.spese-wrapper {
+.expenses-wrapper {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -195,7 +202,7 @@ label span {
 
   margin-bottom: 2rem;
 }
-.transazioni-content {
+.transactions-content {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -204,36 +211,37 @@ label span {
 
   cursor: pointer;
 }
-.spese-list {
+.expenses-list {
   width: 100%;
   max-width: 600px;
   border-collapse: collapse;
   margin-top: 1rem;
   position: relative;
+  margin-bottom: 5rem;
 }
-.spese-list th,
-.spese-list td {
+.expenses-list th,
+.expenses-list td {
   padding: 0.8rem 1rem;
   text-align: left;
   border-bottom: 1px solid #ccc;
 }
-.spese-list th {
+.expenses-list th {
   background-color: #f0f0f0;
   font-weight: bold;
 }
-.spese-list td.positivo,
-.entrata {
+.expenses-list td.positive,
+.income.highlight {
   color: var(--color-green);
 }
-.spese-list td.negativo,
-.uscita {
+.expenses-list td.negative,
+.expenses.highlight {
   color: var(--color-red);
 }
-.spese-list th,
-.spese-list td {
+.expenses-list th,
+.expenses-list td {
   text-align: center;
 }
-.action-elimina {
+.action-delete {
   cursor: pointer;
 }
 .remove-transaction-alert {
@@ -244,12 +252,11 @@ label span {
   justify-content: center;
   flex-direction: column;
   text-align: center;
-  padding: 1rem 2rem;
+  padding: 2rem 1rem;
   background-color: #eeeeee;
   border-radius: 8px;
   position: absolute;
   z-index: 10;
-  bottom: 60%;
   left: 50%;
   transform: translate(-50%);
   box-shadow: var(--shadow);
@@ -260,7 +267,33 @@ label span {
   margin-top: 1rem;
 }
 
-@media (max-width: 550px) {
+/* Footer */
+footer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+/* Languages */
+.lang-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+.lang-flag {
+  width: 30px;
+  height: 30px;
+  transition: transform 0.3s ease;
+
+  cursor: pointer;
+}
+.lang-flag:hover {
+  transform: scale(1.05);
+}
+@media (max-width: 350px) {
   button {
     width: 100%;
     font-size: 0.8rem;
@@ -270,9 +303,17 @@ label span {
   .alert-error {
     width: 100%;
   }
-  .spese-list th,
-  .spese-list td {
+  .expenses-list th,
+  .expenses-list td {
     font-size: 0.8rem;
+  }
+  #add-income,
+  #add-expenses {
+    width: 100%;
+    margin: 1rem 0 3rem 0;
+  }
+  .buttons-wrapper {
+    gap: 0;
   }
 }
 @media (max-width: 1400px) {
@@ -293,8 +334,11 @@ label span {
   form label {
     width: 100%;
   }
-  .spese-list th,
-  .spese-list td {
+  .expenses-list th,
+  .expenses-list td {
     padding: 0.8rem 0.2rem;
+  }
+  footer {
+    margin-top: 4rem;
   }
 }

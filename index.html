@@ -6,143 +6,238 @@
     <link rel="icon" type="image/png" href="./assets/logo.png" />
     <link rel="stylesheet" href="./style.css" />
     <title>myWallet</title>
-    <meta
-      name="description"
-      content="myWallet - Gestisci le tue finanze in modo semplice e veloce."
-    />
+    <meta name="description" content="myWallet" />
   </head>
   <body>
     <div class="logo">
       <h1>myWallet</h1>
-      <img src="./assets/logo.png" alt="logo" />
+      <img src="./assets/logo.png" alt="myWallet-logo" />
     </div>
     <main>
-      <section class="bilancio-wrapper">
-        <h2>BILANCIO TOTALE</h2>
-        <p class="saldo-totale"></p>
-        <div class="bilancio-content">
-          <div class="uscite-content">
-            <p>USCITE</p>
-            <p class="totale-spese"></p>
+      <section class="balance-wrapper">
+        <h2 data-key="totals.balance">TOTAL BALANCE</h2>
+        <p class="total-balance"></p>
+        <div class="balance-content">
+          <div class="expenses-content">
+            <p class="expenses-category" data-key="totals.expenses">
+              TOTAL EXPENSES
+            </p>
+            <p class="total-expenses"></p>
           </div>
-          <div class="entrate-content">
-            <p>ENTRATE</p>
-            <p class="totale-entrate"></p>
+          <div class="income-content">
+            <p class="income-category" data-key="totals.income">TOTAL INCOME</p>
+            <p class="total-income"></p>
           </div>
         </div>
       </section>
-      <section class="movimenti-wrapper">
+      <section class="transactions-wrapper">
         <button
           type="button"
-          id="button-form-uscita"
-          aria-label="Aggiunti uscita"
+          id="button-form-expenses"
+          aria-label="Add expenses"
+          data-key="buttons.addExpenses"
         >
-          + Aggiungi uscita
+          Add expenses
         </button>
         <button
           type="button"
-          id="button-form-entrata"
-          aria-label="Aggiunti entrata"
+          id="button-form-income"
+          aria-label="Add income"
+          data-key="buttons.addIncome"
         >
-          + Aggiungi entrata
+          Add income
         </button>
       </section>
-      <section id="transazioni">
-        <section class="hidden" id="uscita-form">
-          <h3 class="form-title">
-            Aggiungi una nuova <span class="uscita">uscita</span>
-          </h3>
+      <section id="transactions">
+        <section class="hidden" id="expenses-form">
+          <h3
+            class="form-title"
+            data-key="forms.formTitle"
+            data-type="expenses"
+          ></h3>
           <form class="form">
-            <label for="data-uscita"
-              ><span>Seleziona una data:</span
-              ><input type="date" name="data" id="data-uscita"
+            <label for="date-expenses"
+              ><span class="form-label" data-key="forms.formLabel.dateLabel"
+                >Select a date:</span
+              ><input type="date" name="date" id="date-expenses"
             /></label>
-            <label for="categoria-uscita"
-              ><span>Seleziona una categoria:</span>
-              <select name="categoria" id="categoria-uscita">
-                <option value="">Scegli una categoria</option>
-                <option value="cibo">Cibo</option>
-                <option value="trasporti">Trasporti</option>
-                <option value="abbigliamento">Abbigliamento</option>
-                <option value="salute">Salute e benessere</option>
-                <option value="bollette">Bollette</option>
-                <option value="casa">Casa e affitto</option>
-                <option value="viaggi">Viaggi</option>
-                <option value="formazione">Formazione</option>
-                <option value="regali">Regali</option>
-                <option value="altro">Altro</option>
+            <label for="category-expenses"
+              ><span class="form-label" data-key="forms.formLabel.categoryLabel"
+                >Select a category:</span
+              >
+              <select name="category" id="category-expenses">
+                <option value="" data-key="forms.expensesCategories.all">
+                  All category
+                </option>
+                <option value="food" data-key="forms.expensesCategories.food">
+                  Food
+                </option>
+                <option
+                  value="transport"
+                  data-key="forms.expensesCategories.transport"
+                >
+                  Transport
+                </option>
+                <option
+                  value="clothing"
+                  data-key="forms.expensesCategories.clothing"
+                >
+                  Clothing
+                </option>
+                <option
+                  value="health"
+                  data-key="forms.expensesCategories.health"
+                >
+                  Health & Wellness
+                </option>
+                <option value="bills" data-key="forms.expensesCategories.bills">
+                  Bills
+                </option>
+                <option
+                  value="housing"
+                  data-key="forms.expensesCategories.housing"
+                >
+                  Housing & Rent
+                </option>
+                <option
+                  value="travel"
+                  data-key="forms.expensesCategories.travel"
+                >
+                  Travel
+                </option>
+                <option
+                  value="education"
+                  data-key="forms.expensesCategories.education"
+                >
+                  Education
+                </option>
+                <option value="gifts" data-key="forms.expensesCategories.gifts">
+                  Gifts
+                </option>
+                <option value="other" data-key="forms.expensesCategories.other">
+                  Other
+                </option>
               </select>
             </label>
-            <label for="importo-uscita">
-              <span>Seleziona un importo:</span>
+            <label for="amount-expenses">
+              <span class="form-label" data-key="forms.formLabel.amountLabel"
+                >Select an amount:</span
+              >
               <input
                 type="number"
                 inputmode="decimal"
-                name="importo"
-                id="importo-uscita"
+                name="amount"
+                id="amount-expenses"
                 value=""
                 placeholder="0.00"
                 step="0.01"
                 min="0"
               />
             </label>
-            <button type="button" id="aggiungi-uscita" value="button">
-              Aggiungi
+            <button
+              type="button"
+              id="add-expenses"
+              class="add-new"
+              value="button"
+              data-key="buttons.addNew"
+            >
+              Add new
             </button>
           </form>
         </section>
-        <section class="hidden" id="entrata-form">
-          <h3 class="form-title">
-            Aggiungi una nuova
-            <span class="entrata">entrata</span>
-          </h3>
+        <section class="hidden" id="income-form">
+          <h3
+            class="form-title"
+            data-key="forms.formTitle"
+            data-type="income"
+          ></h3>
           <form class="form">
-            <label for="data-entrata"
-              ><span>Seleziona una data:</span
-              ><input type="date" name="data" id="data-entrata"
+            <label for="date-income"
+              ><span class="form-label" data-key="forms.formLabel.dateLabel"
+                >Select a date:</span
+              ><input type="date" name="date" id="date-income"
             /></label>
-            <label for="categoria-entrata"
-              ><span>Seleziona una categoria:</span>
-              <select name="categoria" id="categoria-entrata">
-                <option value="">Scegli una categoria</option>
-                <option value="stipendio">Stipendio</option>
-                <option value="bonus">Bonus</option>
-                <option value="vendite">Vendite</option>
-                <option value="regali">Regali</option>
-                <option value="altro">Altro</option>
+            <label for="category-income"
+              ><span class="form-label" data-key="forms.formLabel.categoryLabel"
+                >Select a category:</span
+              >
+              <select name="category" id="category-income">
+                <option value="" data-key="forms.expensesCategories.all">
+                  All category
+                </option>
+                <option value="salary" data-key="forms.incomeCategories.salary">
+                  Salary
+                </option>
+                <option value="bonus" data-key="forms.incomeCategories.bonus">
+                  Bonus
+                </option>
+                <option value="sales" data-key="forms.incomeCategories.sales">
+                  Sales
+                </option>
+                <option value="gifts" data-key="forms.incomeCategories.gifts">
+                  Gifts
+                </option>
+                <option value="other" data-key="forms.incomeCategories.other">
+                  Other
+                </option>
               </select>
             </label>
-            <label for="importo-entrata">
-              <span>Seleziona un importo:</span>
+            <label for="amount-income">
+              <span class="form-label" data-key="forms.formLabel.amountLabel"
+                >Select an amount:</span
+              >
               <input
                 type="number"
                 inputmode="decimal"
-                name="importo"
-                id="importo-entrata"
+                name="amount"
+                id="amount-income"
                 value=""
                 placeholder="0.00"
                 step="0.01"
                 min="0"
               />
             </label>
-            <button type="button" id="aggiungi-entrata" value="button">
-              Aggiungi
+            <button
+              type="button"
+              id="add-income"
+              class="add-new"
+              value="button"
+              data-key="buttons.addNew"
+            >
+              Add new
             </button>
           </form>
         </section>
       </section>
-      <section class="spese-wrapper">
-        <div class="transazioni-content" id="mostra-transazioni">
-          <h3>Mostra tutte le transazioni</h3>
+      <section class="expenses-wrapper">
+        <div class="transactions-content" id="show-transactions">
+          <h3 id="show-recent" data-key="table.showRecent">Show recent</h3>
           <img
             id="icon-toggle"
             src="./assets/icons/arrow-down.svg"
             alt="arrow-down"
           />
         </div>
-        <table class="spese-list hidden"></table>
+        <table class="expenses-list hidden"></table>
       </section>
     </main>
+    <footer>
+      <p data-key="buttons.languageSelection">Choose your language</p>
+      <div class="lang-wrapper">
+        <img
+          src="./assets/icons/uk.png"
+          alt="uk-lang"
+          id="lang-en"
+          class="lang-flag"
+        />
+        <img
+          src="./assets/icons/it.png"
+          alt="ita-lang"
+          id="lang-it"
+          class="lang-flag"
+        />
+      </div>
+    </footer>
     <script src="./index.js"></script>
   </body>
 </html>

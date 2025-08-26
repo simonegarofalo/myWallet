@@ -1,27 +1,74 @@
-const MOVIMENTI = [];
+const TRANSACTIONS = [];
 
 // Utility functions
 const $ = selector => document.getElementById(selector);
 const $$ = selector => document.querySelector(selector);
+const $$All = selector => document.querySelectorAll(selector);
+
+
+let translations = {};
+
+// Set the current language trying to load the saved language from localStorage if saved
+let currentLang = localStorage.getItem("myWalletLang") || "en";
+
+fetch("lang.json")
+  .then(res => res.json())
+  .then(data => {
+      translations = data;
+      applyTranslations();
+  })
+  .catch(err => console.error("Error loading translations:", err));
+
+
+// Translates all elements that have the data-key attribute
+function applyTranslations() {
+    $$All("[data-key]").forEach(el => {
+        const key = el.dataset.key;
+        const type = el.dataset.type;
+        
+        const typeText = type ? translateText(`forms.${type}Category`) : '';
+        el.innerHTML = translateText(key).replace("{{type}}", typeText ? `<span class="${type} highlight">${typeText}</span>` : '');
+
+      });
+
+    showTransactions();
+}
+
+
+//Function that receives a key and returns the translated text in the current language
+function translateText(key) {
+    return key.split('.').reduce((obj, k) => obj?.[k], translations[currentLang]) || key;
+}
+
+
+// Changes the current language
+function switchLang(lang) { 
+    currentLang = lang;
+    localStorage.setItem("myWalletLang", currentLang);
+    applyTranslations(); 
+}
+
+$("lang-en").addEventListener("click", () => switchLang("en"));
+$("lang-it").addEventListener("click", () => switchLang("it"));
 
 
 // Shows the "Income" form and hides the "Expense" form, or vice versa, based on button clicks
-function mostraForm(tipo) {
-    const entrataForm = $("entrata-form");
-    const uscitaForm = $("uscita-form");
+function showForm(type) {
+    const incomeForm = $("income-form");
+    const expensesForm = $("expenses-form");
 
-    if (tipo === "entrata") {
-        entrataForm.classList.remove("hidden");
-        uscitaForm.classList.add("hidden");
+    if (type === "income") {
+        incomeForm.classList.remove("hidden");
+        expensesForm.classList.add("hidden");
     } else {
-        uscitaForm.classList.remove("hidden");
-        entrataForm.classList.add("hidden");
+        expensesForm.classList.remove("hidden");
+        incomeForm.classList.add("hidden");
     }
 }
 
 // Attach event listeners to form toggle buttons
-$("button-form-entrata").addEventListener('click', () => mostraForm("entrata"));
-$("button-form-uscita").addEventListener('click', () => mostraForm("uscita"));
+$("button-form-income").addEventListener('click', () => showForm("income"));
+$("button-form-expenses").addEventListener('click', () => showForm("expenses"));
 
 
 // Ensures that amount inputs are consistently formatted with 2 decimal places.
@@ -36,95 +83,141 @@ function formatOnBlur(input) {
     });
 }
 
-formatOnBlur($("importo-uscita"));
-formatOnBlur($("importo-entrata"));
+formatOnBlur($("amount-expenses"));
+formatOnBlur($("amount-income"));
 
 
 // Creates and returns a <tr> element representing a single transaction
-function creaMovimento(m) {
+function createTransaction(m) {
     const tr = document.createElement("tr");
     tr.dataset.id = m.id;
 
-    const valori = [
-        new Date(m.data).toLocaleDateString("it-IT"),
-        m.categoria.charAt(0).toUpperCase() + m.categoria.slice(1),
-        m.tipo === "entrata" ? "Entrata" : "Uscita",
-        (m.tipo === "entrata" ? "+" : "-") + m.importo.toFixed(2) + " €"
+    
+    const categoryKey =
+        m.type === "income"
+            ? `forms.incomeCategories.${m.category}`
+            : `forms.expensesCategories.${m.category}`;
+
+    const values = [
+        new Date(m.date).toLocaleDateString(currentLang),
+        translateText(categoryKey),
+        translateText(`forms.${m.type}Category`),
+        (m.type === "expenses" ? "-" : "+") + m.amount.toFixed(2) + " €"
     ];
 
-    valori.forEach((val, i) => {
+    values.forEach((val, i) => {
         const td = document.createElement("td");
         td.textContent = val;
-        if (i >= 2) td.className = m.tipo === "entrata" ? "positivo" : "negativo";
+        if (i >= 2) td.className = m.type === "income" ? "positive" : "negative";
         tr.appendChild(td);
     });
 
-    const tdAzioni = document.createElement("td");
-    const btnElimina = document.createElement("span");
-    btnElimina.classList.add("action-elimina");
-    btnElimina.innerHTML = '<img src="./assets/icons/basket.png" alt="Elimina" width="20" height="20">';
-    btnElimina.addEventListener("click", () => eliminaMovimento(m.id));
-    tdAzioni.appendChild(btnElimina);
-    tr.appendChild(tdAzioni);
+    const tdActions = document.createElement("td");
+    const btnDelete = document.createElement("span");
+    btnDelete.classList.add("action-delete");
+    btnDelete.innerHTML =
+        '<img src="./assets/icons/basket.png" alt="Delete" width="20" height="20">';
+    btnDelete.addEventListener("click", () => deleteTransaction(m.id));
+    tdActions.appendChild(btnDelete);
+    tr.appendChild(tdActions);
 
     return tr;
 }
 
+
 // Initially renders all transactions when loading the page
-function mostraMovimenti() {
-    const lista = $$(".spese-list");
-    lista.innerHTML = "";
+function showTransactions() {
+    const list = $$(".expenses-list");
+    list.innerHTML = "";
 
     const thead = document.createElement("thead");
     const headerRow = document.createElement("tr");
-    ["Data", "Categoria", "Tipo", "Importo", "Azioni"].forEach(text => {
+
+    const headers = [
+        "table.date",
+        "table.category",
+        "table.type",
+        "table.amount",
+        "table.actions"
+    ];
+
+    headers.forEach(key => {
         const th = document.createElement("th");
-        th.textContent = text;
+        th.textContent = translateText(key);
         headerRow.appendChild(th);
     });
+
     thead.appendChild(headerRow);
-    lista.appendChild(thead);
+    list.appendChild(thead);
 
     const tbody = document.createElement("tbody");
-    lista.appendChild(tbody);
+    list.appendChild(tbody);
 
-    if (MOVIMENTI.length === 0) {
+    if (TRANSACTIONS.length === 0) {
         const tr = document.createElement("tr");
-        tr.classList.add("avviso-nessuna-transazione");
-        tr.innerHTML = `<td colspan="5">Non sono presenti transazioni</td>`;
+        tr.classList.add("no-transaction-alert");
+        tr.innerHTML = `<td colspan="5">${translateText("table.noTransactions")}</td>`;
         tbody.appendChild(tr);
         return;
     }
 
     // Sort transactions by date (latest first)
-    MOVIMENTI.sort((a, b) => new Date(b.data) - new Date(a.data));
-    MOVIMENTI.forEach(m => tbody.appendChild(creaMovimento(m)));
+    TRANSACTIONS.sort((a, b) => new Date(b.date) - new Date(a.date));
+    TRANSACTIONS.forEach(m => tbody.appendChild(createTransaction(m)));
 }
 
 
-// Shows an alert if a required field is empty
-function mostraAlert() {
-    const formContainer = $("transazioni");
-    if (!formContainer.querySelector(".alert-error")) {
-        const alert = document.createElement("div");
-        alert.classList.add("alert-error");
-        alert.textContent = "⚠️ Tutti i campi sono obbligatori";
+
+// Displays either an error alert or a confirmation dialog depending on the provided type
+function showAlert(type, options = {}) {
+    const formContainer = $("transactions");
+    if (formContainer.querySelector(".alert-error") || formContainer.querySelector(".remove-transaction-alert")) return;
+
+    const alert = document.createElement("div");
+    alert.classList.add(type === "error" ? "alert-error" : "remove-transaction-alert");
+    alert.setAttribute("role", type === "confirm" ? "alertdialog" : "alert");
+    if (type === "error") {
+        alert.textContent = translateText(options.textKey || "alerts.emptyFields");
         formContainer.appendChild(alert);
-        setTimeout(() => alert.remove(), 2000);
+        setTimeout(() => alert.remove(), options.duration || 2000);
+    } else if (type === "confirm") {
+        alert.textContent = translateText(options.textKey || "alerts.deleteTransaction");
+
+        const btnWrapper = document.createElement("div");
+        btnWrapper.classList.add("buttons-wrapper");
+        const btnConfirm = document.createElement("button");
+        btnConfirm.setAttribute("aria-label", translateText("alerts.confirm"));
+        btnConfirm.textContent = translateText("alerts.confirm");
+        const btnCancel = document.createElement("button");
+        btnCancel.classList.add("secondary-button");
+        btnCancel.setAttribute("aria-label", translateText("alerts.cancel"));
+        btnCancel.textContent = translateText("alerts.cancel");
+
+        btnWrapper.appendChild(btnConfirm);
+        btnWrapper.appendChild(btnCancel);
+        alert.appendChild(btnWrapper);
+        formContainer.appendChild(alert);
+
+        btnConfirm.addEventListener("click", () => {
+            if (options.onConfirm) options.onConfirm();
+            alert.remove();
+        });
+
+        btnCancel.addEventListener("click", () => alert.remove());
     }
 }
 
 
 // Calculates and updates total income, total expenses, and balance
-function aggiornaTotali() {
-    let totaleEntrate = 0;
-    let totaleUscite = 0;
+function updateTotals() {
+    let totalIncome = 0;
+    let totalExpenses = 0;
 
-    MOVIMENTI.forEach(m => m.tipo === "entrata" ? totaleEntrate += m.importo : totaleUscite += m.importo);
+    TRANSACTIONS.forEach(m => m.type === "income" ? totalIncome += m.amount : totalExpenses += m.amount);
 
-    $$(".totale-entrate").textContent = "+ " + totaleEntrate.toFixed(2) + " €";
-    $$(".totale-spese").textContent = "- " + totaleUscite.toFixed(2) + " €";
-    $$(".saldo-totale").textContent = (totaleEntrate - totaleUscite).toFixed(2) + " €";
+    $$(".total-income").textContent = "+ " + totalIncome.toFixed(2) + " €";
+    $$(".total-expenses").textContent = "- " + totalExpenses.toFixed(2) + " €";
+    $$(".total-balance").textContent = (totalIncome - totalExpenses).toFixed(2) + " €";
 }
 
 
@@ -137,108 +230,84 @@ function generateId() {
 
 
 // Adds a new transaction, updates totals, and appends only the new row to the table for better performance
-function aggiungiMovimento(tipo) {
-    const transazioneID = generateId();
-    const importoEl = $(`importo-${tipo}`);
-    const categoriaEl = $(`categoria-${tipo}`);
-    const dataEl = $(`data-${tipo}`);
+function addTransaction(type) {
+    const transactionID = generateId();
+    const amountEl = $(`amount-${type}`);
+    const categoryEl = $(`category-${type}`);
+    const dateEl = $(`date-${type}`);
 
-    const valoreImporto = parseFloat(importoEl.value);
-    const valoreCategoria = categoriaEl.value;
-    const valoreData = dataEl.value;
+    const amountValue = parseFloat(amountEl.value);
+    const categoryValue = categoryEl.value;
+    const dateValue = dateEl.value;
 
-    if (isNaN(valoreImporto) || valoreImporto <= 0 || !valoreCategoria || !valoreData) {
-        mostraAlert();
+    if (isNaN(amountValue) || amountValue <= 0 || !categoryValue || !dateValue) {
+        showAlert("error");
         return;
     }
 
-    const nuovoMovimento = {
+    const newTransaction = {
         id: generateId(),
-        tipo: tipo,
-        importo: valoreImporto,
-        categoria: valoreCategoria,
-        data: valoreData
+        type: type,
+        amount: amountValue,
+        category: categoryValue,
+        date: dateValue
     };
 
-    MOVIMENTI.push(nuovoMovimento);
-    salvaMovimenti();
-    aggiornaTotali();
-    mostraMovimenti();
+    TRANSACTIONS.push(newTransaction);
+    saveTransactions();
+    updateTotals();
+    showTransactions();
 
-    importoEl.value = "";
-    categoriaEl.value = "";
-    dataEl.value = "";
+    amountEl.value = "";
+    categoryEl.value = "";
+    dateEl.value = "";
 }
 
-$("aggiungi-uscita").addEventListener("click", () => aggiungiMovimento("uscita"));
-$("aggiungi-entrata").addEventListener("click", () => aggiungiMovimento("entrata"));
+$("add-expenses").addEventListener("click", () => addTransaction("expenses"));
+$("add-income").addEventListener("click", () => addTransaction("income"));
 
 
-// Shows a confirmation dialog and removes a transaction if confirmed, updating only the affected row
-function eliminaMovimento(id) {
-    if (typeof id !== "string") return;
-
-    const boxTransazioni = $$(".spese-list");
-    if (boxTransazioni.querySelector(".remove-transaction-alert")) return;
-
-    const alert = document.createElement("div");
-    alert.classList.add("remove-transaction-alert");
-    alert.setAttribute("role", "alertdialog");
-    alert.setAttribute("aria-modal", "true");
-    alert.textContent = "Confermi di voler rimuovere la transazione?";
-
-    const btnWrapper = document.createElement("div");
-    btnWrapper.classList.add("buttons-wrapper");
-    const btnConferma = document.createElement("button");
-    btnConferma.setAttribute("aria-label", "Conferma eliminazione");
-    btnConferma.textContent = "Conferma";
-    const btnAnnulla = document.createElement("button");
-    btnAnnulla.classList.add("secondary-button");
-    btnAnnulla.setAttribute("aria-label", "Annulla eliminazione");
-    btnAnnulla.textContent = "Annulla";
-
-    btnWrapper.appendChild(btnConferma);
-    btnWrapper.appendChild(btnAnnulla);
-    alert.appendChild(btnWrapper);
-    boxTransazioni.appendChild(alert);
-
-    btnConferma.addEventListener("click", () => {
-        const index = MOVIMENTI.findIndex(m => m.id === id);
-        if (index !== -1) {
-            MOVIMENTI.splice(index, 1);
-            salvaMovimenti();
-            aggiornaTotali();
-            mostraMovimenti();
+// Shows a confirmation dialog and removes a transaction if confirmed
+function deleteTransaction(id) {
+    showAlert("confirm", {
+        textKey: "alerts.deleteTransaction",
+        onConfirm: () => {
+            const index = TRANSACTIONS.findIndex(m => m.id === id);
+            if (index !== -1) {
+                TRANSACTIONS.splice(index, 1);
+                saveTransactions();
+                updateTotals();
+                showTransactions();
+            }
         }
-        alert.remove();
     });
-
-    btnAnnulla.addEventListener("click", () => alert.remove());
 }
 
 
-// Saves the current state of the MOVIMENTI array into localStorage
-function salvaMovimenti() {
-    localStorage.setItem("movimenti", JSON.stringify(MOVIMENTI));
+// Saves the current state of the TRANSACTIONS array into localStorage
+function saveTransactions() {
+    localStorage.setItem("transactions", JSON.stringify(TRANSACTIONS));
 }
 
-function caricaMovimenti() {
-    const dati = JSON.parse(localStorage.getItem("movimenti")) || [];
-    MOVIMENTI.length = 0;
-    MOVIMENTI.push(...dati);
-    mostraMovimenti();
-    aggiornaTotali();
+
+// Loads transactions from localStorage, updates the in-memory list, and updates the UI
+function loadTransactions() {
+    const dati = JSON.parse(localStorage.getItem("transactions")) || [];
+    TRANSACTIONS.length = 0;
+    TRANSACTIONS.push(...dati);
+    showTransactions();
+    updateTotals();
 }
 
-caricaMovimenti();
+loadTransactions();
 
 
 // Toggles visibility of the transaction list and rotates the arrow icon accordingly
-const mostraTransazioni = $("mostra-transazioni");
-const lista = $$(".spese-list");
+const showRecent = $("show-transactions");
+const list = $$(".expenses-list");
 const icon = $("icon-toggle");
 
-mostraTransazioni.addEventListener('click', () => {
-    lista.classList.toggle("hidden");
-    icon.style.transform = lista.classList.contains("hidden") ? "rotate(0deg)" : "rotate(180deg)";
+showRecent.addEventListener('click', () => {
+    list.classList.toggle("hidden");
+    icon.style.transform = list.classList.contains("hidden") ? "rotate(0deg)" : "rotate(180deg)";
 });

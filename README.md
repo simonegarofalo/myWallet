@@ -14,11 +14,12 @@ This is a static web project. You can preview it locally by opening `index.html`
 
 ## Features
 
-- Add **entrata** (income) and **uscita** (expense) with: date, category and amount.
+- Add **income** and **expenses** with: date, category and amount.
 - Persists transactions in `localStorage`.
 - View totals: total income, total expenses and balance.
 - Sorts transactions by date (latest first).
 - Delete transactions with confirmation dialog.
+- Simple client-side internationalization using lang.json and data-key attributes
 - Fully responsive UI for desktop and mobile.
 
 ---
@@ -39,11 +40,13 @@ myWallet/
 ├─ index.html
 ├─ style.css
 ├─ index.js
+├─ lang.json
 ├─ assets/
+│  ├─ myWallet.gif
 │  ├─ logo.png
 │  └─ icons/
-│
-├─ README.md
+└─ README.md
+
 
 ```
 
@@ -51,38 +54,39 @@ myWallet/
 
 ## Data model
 
-Each transaction (`movimento`) uses this shape:
+Each transaction object has this shape in memory:
 
 ```js
 {
   id: "string",        // uuid
-  tipo: "entrata" | "uscita",
+  type: "income" | "expenses",
   importo: Number,      // float
   categoria: "string",
   data: "YYYY-MM-DD"
 }
 ```
 
-All transactions are stored as an array in `localStorage` under the `MOVIMENTI` key.
+All transactions are stored as an array in `localStorage` under the `TRANSACTIONS` key.
+UI language choice is saved under the key "myWalletLang"
 
 ---
 
 ## How it works
 
-1. On startup `caricaMovimenti()` reads `localStorage` and populates the global `MOVIMENTI` array.
-2. `mostraMovimenti()` renders the table (thead + tbody) built from `MOVIMENTI`. It sorts by date.
-3. Clicking **+ Aggiungi entrata/uscita** shows the relevant form via `mostraForm()`.
-4. When the user clicks **Aggiungi**, `aggiungiMovimento(tipo)` validates inputs, creates an entry with `crypto.randomUUID()`, pushes it to `MOVIMENTI`, calls `salvaMovimenti()` (writes `localStorage`), updates totals and appends only the new row to the table for performance.
-5. Deletion uses `eliminaMovimento(id)`, which asks for confirmation and removes the entry from `MOVIMENTI`, updates storage and totals and removes the corresponding `<tr>`.
+1. On startup `loadTransactions()` reads `localStorage` and populates the global `TRANSACTIONS` array.
+2. `showTransactions()` renders the table (thead + tbody) built from `TRANSACTIONS`. It sorts by date.
+3. Clicking **Add income / expenses** shows the relevant form via `showForm()`.
+4. When the user submits, `addTransaction(type)` validates inputs, generates an `ID` with `crypto.randomUUID()`, creates a new entry, pushes it to `TRANSACTIONS`, saves it to `localStorage`, updates totals and appends only the new row to the table for performance.
+5. To remove an entry, `deleteTransaction(id)` shows a confirmation dialog, then deletes the item form `TRANSACTIONS`, updates storage and totals and removes the corresponding `<tr>`.
 
 ---
 
 ## Usage
 
-- Click **+ Aggiungi entrata** or **+ Aggiungi uscita** to open a form.
+- Click **Add income** or **Add expenses** to open a form.
 - Fill date, select category, type amount.
-- Click **Aggiungi** to store the transaction.
-- Open **Mostra tutte le transazioni** to toggle the transactions table.
+- Click **Add new** to store the transaction.
+- Open **Show recent** to toggle the transactions table.
 - Click the trash icon to delete a transaction (a confirmation dialog appears).
 
 ---
@@ -90,7 +94,7 @@ All transactions are stored as an array in `localStorage` under the `MOVIMENTI` 
 ## Future improvements
 
 - Add a feature to sort transactions by date, amount, category, or type.
-- Add multi-language support
+  ✔️ Add multi-language support (EN | IT)
 - Refactor the project using a front-end framework (maybe Astro or React) for better scalability.
 - Integrate a backend with Node.js, Express and MySQL.
 

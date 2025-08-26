@@ -60,9 +60,9 @@ Each transaction object has this shape in memory:
 {
   id: "string",        // uuid
   type: "income" | "expenses",
-  importo: Number,      // float
-  categoria: "string",
-  data: "YYYY-MM-DD"
+  value: Number,      // float
+  category: "string",
+  date: "YYYY-MM-DD"
 }
 ```
 

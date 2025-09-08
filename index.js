@@ -15,6 +15,7 @@ fetch("lang.json")
   .then(res => res.json())
   .then(data => {
       translations = data;
+      
       applyTranslations();
   })
   .catch(err => console.error("Error loading translations:", err));
@@ -23,6 +24,8 @@ fetch("lang.json")
 // Translates all elements that have the data-key attribute
 function applyTranslations() {
     $$All("[data-key]").forEach(el => {
+        console.log($$All("[data-key]"))
+        console.log(el.dataset.key)
         const key = el.dataset.key;
         const type = el.dataset.type;
         
@@ -64,6 +67,7 @@ function showForm(type) {
         expensesForm.classList.remove("hidden");
         incomeForm.classList.add("hidden");
     }
+    
 }
 
 // Attach event listeners to form toggle buttons
@@ -187,6 +191,7 @@ function showAlert(type, options = {}) {
         btnWrapper.classList.add("buttons-wrapper");
         const btnConfirm = document.createElement("button");
         btnConfirm.setAttribute("aria-label", translateText("alerts.confirm"));
+        
         btnConfirm.textContent = translateText("alerts.confirm");
         const btnCancel = document.createElement("button");
         btnCancel.classList.add("secondary-button");

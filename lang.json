@@ -56,7 +56,10 @@
         "deleteTransaction": "Delete this transaction?",
         "confirm": "Confirm",
         "cancel": "Cancel"
-}
+      },
+      "newsMessage": {
+        "githubLink": "Have you already checked the project repository on my GitHub? This project is open source so feel free to fork, use it, or contribute."
+      }
     },
     "it": {
       "buttons": {
@@ -115,6 +118,9 @@
         "deleteTransaction": "Eliminare questa transazione?",
         "confirm": "Conferma",
         "cancel": "Annulla"
-}
+      },
+      "newsMessage": {
+        "githubLink": "Hai già dato un’occhiata al repository del progetto su GitHub? Questo progetto è open source, quindi sentiti libero di fare un fork, usarlo o contribuire."
+      }
     }
   }

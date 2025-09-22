@@ -9,23 +9,93 @@
     <meta name="description" content="myWallet" />
   </head>
   <body>
-    <div class="logo">
-      <h1>myWallet</h1>
-      <img src="./assets/logo.png" alt="myWallet-logo" />
-    </div>
+    <header>
+      <nav>
+        <div class="logo-wrapper">
+          <img src="./assets/dark-mode-logo.svg" alt="myWallet-logo" />
+        </div>
+        <div class="icons-wrapper">
+          <div id="notifications-icon" class="icon-container news">
+            <img
+              src="./assets/icons/dark-mode-notification.svg"
+              alt="notifications-icon"
+            />
+            <div class="green-circle">
+              <div class="pulsing green-circle-shadow"></div>
+            </div>
+          </div>
+          <div id="updates-box" class="updates-box obscure">
+            <p data-key="newsMessage.githubLink"></p>
+            <div class="green-circle">
+              <div class="pulsing green-circle-shadow"></div>
+            </div>
+            <div class="github-wrapper">
+              <img src="./assets/icons/github-icon.svg" alt="github-icon" /><a
+                href="https://github.com/simonegarofalo/myWallet"
+                >https://github.com/simonegarofalo/myWallet</a
+              >
+            </div>
+          </div>
+          <div id="settings-icon" class="icon-container">
+            <img
+              src="./assets/icons/dark-mode-settings.svg"
+              alt="settings-icon"
+            />
+          </div>
+          <div class="settings-menu hidden">
+            <div class="main-menu-wrapper">
+              <div id="return-icon" class="icon-container">
+                <img
+                  src="./assets/icons/arrow-back-dark-mode.svg"
+                  alt="arrow-back-icon"
+                />
+              </div>
+            </div>
+            <div class="language-wrapper">
+              <p data-key="buttons.languageSelection">Choose your language</p>
+              <div class="lang-wrapper">
+                <img
+                  src="./assets/icons/uk.png"
+                  alt="uk-lang"
+                  id="lang-en"
+                  class="lang-flag"
+                />
+                <img
+                  src="./assets/icons/it.png"
+                  alt="ita-lang"
+                  id="lang-it"
+                  class="lang-flag"
+                />
+              </div>
+            </div>
+            <img
+              src="./assets/dark-mode-logo.svg"
+              alt="myWallet-logo"
+              class="secondary-logo"
+            />
+          </div>
+        </div>
+      </nav>
+    </header>
     <main>
       <section class="balance-wrapper">
-        <h2 data-key="totals.balance">TOTAL BALANCE</h2>
-        <p class="total-balance"></p>
+        <div class="total-balance-wrapper">
+          <span data-key="totals.balance">TOTAL BALANCE</span>
+          <div class="total-value-wrapper">
+            <p class="total-balance"></p>
+          </div>
+        </div>
         <div class="balance-content">
           <div class="expenses-content">
-            <p class="expenses-category" data-key="totals.expenses">
+            <span class="expenses-category" data-key="totals.expenses">
               TOTAL EXPENSES
-            </p>
+            </span>
             <p class="total-expenses"></p>
           </div>
           <div class="income-content">
-            <p class="income-category" data-key="totals.income">TOTAL INCOME</p>
+            <span class="income-category" data-key="totals.income"
+              >TOTAL INCOME</span
+            >
             <p class="total-income"></p>
           </div>
         </div>
@@ -36,6 +106,7 @@
           id="button-form-expenses"
           aria-label="Add expenses"
           data-key="buttons.addExpenses"
+          class="main-button"
         >
           Add expenses
         </button>
@@ -44,6 +115,7 @@
           id="button-form-income"
           aria-label="Add income"
           data-key="buttons.addIncome"
+          class="alternative-button"
         >
           Add income
         </button>
@@ -137,7 +209,7 @@
             <button
               type="button"
               id="add-expenses"
-              class="add-new"
+              class="add-new alternative-button"
               value="button"
               data-key="buttons.addNew"
             >
@@ -200,7 +272,7 @@
             <button
               type="button"
               id="add-income"
-              class="add-new"
+              class="add-new alternative-button"
               value="button"
               data-key="buttons.addNew"
             >
@@ -211,33 +283,16 @@
       </section>
       <section class="expenses-wrapper">
         <div class="transactions-content" id="show-transactions">
-          <h3 id="show-recent" data-key="table.showRecent">Show recent</h3>
+          <h2 id="show-recent" data-key="table.showRecent">Show recent</h2>
           <img
             id="icon-toggle"
-            src="./assets/icons/arrow-down.svg"
+            src="./assets/icons/dark-mde-arrow-down.svg"
             alt="arrow-down"
           />
         </div>
         <table class="expenses-list hidden"></table>
       </section>
     </main>
-    <footer>
-      <p data-key="buttons.languageSelection">Choose your language</p>
-      <div class="lang-wrapper">
-        <img
-          src="./assets/icons/uk.png"
-          alt="uk-lang"
-          id="lang-en"
-          class="lang-flag"
-        />
-        <img
-          src="./assets/icons/it.png"
-          alt="ita-lang"
-          id="lang-it"
-          class="lang-flag"
-        />
-      </div>
-    </footer>
     <script src="./index.js"></script>
   </body>
 </html>

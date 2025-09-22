@@ -52,6 +52,62 @@ $("lang-en").addEventListener("click", () => switchLang("en"));
 $("lang-it").addEventListener("click", () => switchLang("it"));
 
 
+
+// Settings tab handler
+function settingsMenuHandler() {
+    const settingsMenu = $$(".settings-menu");
+    const settingsIcon = $("settings-icon");
+    const returnIcon = $("return-icon");
+  
+    settingsIcon.addEventListener("click", () => {
+      settingsMenu.classList.remove("hidden");
+    });
+  
+    returnIcon.addEventListener("click", () => {
+      settingsMenu.classList.add("hidden");
+    });
+  }
+  
+  settingsMenuHandler();
+
+
+  // Notifications box handler 
+  function revealNotifications() {
+    const notificationsIcon = $("notifications-icon");
+    const updatesBox = $("updates-box");
+  
+    const supportsHover = window.matchMedia("(hover: hover)").matches;
+  
+    if (supportsHover) {
+      function showBox() {
+        updatesBox.classList.remove("obscure");
+      }
+      function hideBox() {
+        updatesBox.classList.add("obscure");
+      }
+  
+      notificationsIcon.addEventListener("mouseenter", showBox);
+      notificationsIcon.addEventListener("mouseleave", () => {
+        setTimeout(() => {
+          if (!updatesBox.matches(":hover") && !notificationsIcon.matches(":hover")) {
+            hideBox();
+          }
+        }, 100);
+      });
+  
+      updatesBox.addEventListener("mouseenter", showBox);
+      updatesBox.addEventListener("mouseleave", hideBox);
+  
+    } else {
+      notificationsIcon.addEventListener("click", () => {
+        updatesBox.classList.toggle("obscure");
+      });
+    }
+  }
+  
+  revealNotifications();
+
+
 // Shows the "Income" form and hides the "Expense" form, or vice versa, based on button clicks
 function showForm(type) {
     const incomeForm = $("income-form");

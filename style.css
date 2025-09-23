@@ -362,10 +362,16 @@ main {
   font-weight: bolder;
 }
 form {
+  width: 100%;
+
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: end;
+  align-items: center;
   gap: 1rem;
+}
+.form label {
+  width: 100%;
 }
 .form input,
 .form select,
@@ -405,6 +411,22 @@ label span {
   font-size: 1.1rem;
   line-height: 2rem;
   margin-left: 0.5rem;
+}
+.form-controls-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  padding: 1rem 0;
+}
+.dismiss-button {
+  width: 100%;
+  height: 3rem;
+
+  background-color: rgb(255, 55, 55);
 }
 .alert-error {
   width: auto;
@@ -612,11 +634,6 @@ label span {
   .expenses-list td {
     font-size: 0.8rem;
   }
-  #add-income,
-  #add-expenses {
-    width: 100%;
-    margin: 1rem 0 3rem 0;
-  }
   .buttons-wrapper {
     gap: 0;
   }
@@ -628,14 +645,6 @@ label span {
   .logo img {
     width: 16px;
     height: 16px;
-  }
-  form {
-    width: 100%;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: start;
   }
   form label {
     width: 100%;

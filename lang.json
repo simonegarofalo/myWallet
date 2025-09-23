@@ -4,7 +4,7 @@
         "addIncome": "Add income",
         "addExpenses": "Add expenses",
         "addNew": "Add new",
-        "Dismiss": "Dismiss",
+        "dismiss": "Dismiss",
         "languageSelection": "Choose a language"
       },
       "totals": {
@@ -67,7 +67,7 @@
         "addIncome": "Aggiungi entrata",
         "addExpenses": "Aggiungi uscita",
         "addNew": "Aggiungi",
-        "Dismiss": "Annulla",
+        "dismiss": "Annulla",
         
         "languageSelection": "Seleziona una lingua"
       },

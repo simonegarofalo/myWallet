@@ -126,23 +126,27 @@ function showForm(type) {
     
 }
 
-//Hides Form if dismiss button is clicked
 
-function hideForm() {
-    
-    const expensesForm = $("expenses-form");
-    expensesForm.classList.add("hidden");
-
-
-}
-
-$("dismiss-expenses").addEventListener('click', ()=> hideForm());
-
-// Attach event listeners to form toggle buttons
-$("button-form-income").addEventListener('click', () => showForm("income"));
-
-$("button-form-expenses").addEventListener('click', () => showForm("expenses"));
-
+// Hides form dynamically
+function hideForm(type) {
+    const form = $(`${type}-form`);
+    form.classList.add("hidden");
+  
+    const amountEl = $(`amount-${type}`);
+    const categoryEl = $(`category-${type}`);
+    const dateEl = $(`date-${type}`);
+  
+    amountEl.value = "";
+    categoryEl.value = "";
+    dateEl.value = "";
+  }
+  
+  $("dismiss-expenses").addEventListener("click", () => hideForm("expenses"));
+  $("dismiss-income").addEventListener("click", () => hideForm("income"));
+  
+  $("button-form-income").addEventListener("click", () => showForm("income"));
+  $("button-form-expenses").addEventListener("click", () => showForm("expenses"));
+ 
 
 // Ensures that amount inputs are consistently formatted with 2 decimal places.
 function formatOnBlur(input) {

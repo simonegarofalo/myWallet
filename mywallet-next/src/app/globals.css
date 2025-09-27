@@ -355,7 +355,7 @@ main {
 }
 .form-title {
   font-weight: normal;
-  margin-bottom: 2rem;
+  margin: 2rem 0;
   color: #ffffff;
 }
 .form-title .highlight {

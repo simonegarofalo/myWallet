@@ -24,7 +24,7 @@
     "forms": {
       "expensesCategory": "uscita",
       "incomeCategory": "entrata",
-      "formTitle": "Aggiungi nuova <span class='highlight'>{{type}}</span>",
+      "formTitle": "Aggiungi nuova",
       "formLabel":{
           "dateLabel": "Seleziona una data:",
           "categoryLabel": "Seleziona una categoria:",

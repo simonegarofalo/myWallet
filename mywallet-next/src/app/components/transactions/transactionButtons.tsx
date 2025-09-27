@@ -1,20 +1,30 @@
 'use client';
 
-import TransactionButton from './transactionButton';
+import { useTranslation } from "react-i18next";
 
-export default function TransactionButtons() {
+type TransactionButtonsProps = {
+  onClick: (type: "income" | "expenses") => void;
+};
+
+export default function TransactionButtons({ onClick }: TransactionButtonsProps) {
+  const { t } = useTranslation();
+
   return (
-    <section className="transactions-wrapper">
-      <TransactionButton
-        labelKey="buttons.addExpenses"
-        ariaLabel="Add expenses"
-        onClick={() => console.log("Open expenses form")}
-      />
-      <TransactionButton
-        labelKey="buttons.addIncome"
-        ariaLabel="Add income"
-        onClick={() => console.log("Open income form")}
-      />
-    </section>
+    <div className="transactions-wrapper">
+      <button
+        type="button"
+        className="form-button"
+        onClick={() => onClick("expenses")}
+      >
+        {t("buttons.addExpenses")}
+      </button>
+      <button
+        type="button"
+        className="form-button"
+        onClick={() => onClick("income")}
+      >
+        {t("buttons.addIncome")}
+      </button>
+    </div>
   );
 }

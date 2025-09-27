@@ -23,7 +23,7 @@
     "forms": {
       "expensesCategory": "expenses",
       "incomeCategory": "income",
-      "formTitle": "Add new <span class='highlight'>{{type}}</span>",
+      "formTitle": "Add new",
       "formLabel":{
           "dateLabel": "Select a date:",
           "categoryLabel": "Select a category:",

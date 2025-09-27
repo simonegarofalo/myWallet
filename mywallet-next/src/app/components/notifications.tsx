@@ -11,13 +11,13 @@ type NotificationsProps = {
 };
 
 export default function Notifications({ open, setOpen, supportsHover }: NotificationsProps) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   return (
     <div
       id="updates-box"
       className={`updates-box ${open ? "" : "obscure"}`}
       onMouseEnter={() => supportsHover && setOpen(true)}
-      onMouseLeave={() => supportsHover && setOpen(false)}
+      onMouseLeave={() => supportsHover && setTimeout(() => setOpen(false), 150)}
     >
       <p>{t('newsMessage.githubLink')}</p>
       <div className="green-circle">

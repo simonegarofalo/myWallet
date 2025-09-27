@@ -432,25 +432,49 @@ label span {
   background-color: #f83938;
   color: #ffffff;
 }
-.alert-error {
+.modal-wrapper {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+.modal-container {
   width: auto;
-  height: auto;
-
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   text-align: center;
 
   position: absolute;
-  z-index: 10;
-  bottom: 60%;
+  z-index: 90;
+  bottom: 50%;
   left: 50%;
+  transform: translateY(50%);
 
   padding: 1rem 2rem;
   background-color: #eeeeee;
   border-radius: 8px;
   transform: translate(-50%);
   box-shadow: var(--shadow);
+}
+.modal-actions {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+}
+.modal-btn.confirm {
+  background-color: #000000;
+}
+.modal-btn.cancel {
+  color: #000000;
+  background-color: transparent !important;
+  box-shadow: none;
 }
 #icon-toggle {
   transition: transform 0.3s ease;
@@ -494,7 +518,7 @@ label span {
   flex-direction: column;
   gap: 0.5rem;
 
-  background-color: #282828;
+  background-color: #151515;
   color: #868686;
   padding: 1rem 1.5rem;
   border-radius: 8px;
@@ -526,11 +550,15 @@ label span {
   font-size: 1.2rem;
 }
 .delete-transaction {
+  box-shadow: none;
   background-color: transparent;
 
   position: absolute;
   top: 0.5rem;
   right: 0;
+}
+.delete-transaction img:hover {
+  transform: rotate(15deg);
 }
 .action-delete {
   cursor: pointer;
@@ -649,10 +677,6 @@ label span {
   .alert-error {
     width: 100%;
   }
-  .expenses-list th,
-  .expenses-list td {
-    font-size: 0.8rem;
-  }
   .buttons-wrapper {
     gap: 0;
   }
@@ -667,12 +691,5 @@ label span {
   }
   form label {
     width: 100%;
-  }
-  .expenses-list th,
-  .expenses-list td {
-    padding: 0.8rem 0.2rem;
-  }
-  footer {
-    margin-top: 4rem;
   }
 }

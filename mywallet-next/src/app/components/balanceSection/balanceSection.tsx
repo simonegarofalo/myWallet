@@ -1,18 +1,16 @@
 'use client';
 
+import { useTransactions } from '../../hooks/useTransactions';
 import TotalBalance from "./totalBalance";
 import IncomeExpensesSummary from "./incomeExpensesSummary";
 
-type BalanceSectionProps = {
-  total: number;
-  income: number;
-  expenses: number;
-}
-export default function BalanceSection({ total, income, expenses} : BalanceSectionProps ) {
+export default function BalanceSection(){ 
+  const { totalBalance, totalIncome, totalExpenses } = useTransactions();
+
     return(
       <section className="balance-wrapper">
-      <TotalBalance total={total} />
-      <IncomeExpensesSummary income={income} expenses={expenses} />
+      <TotalBalance total={totalBalance} />
+      <IncomeExpensesSummary income={totalIncome} expenses={totalExpenses} />
       </section>
     )
 }

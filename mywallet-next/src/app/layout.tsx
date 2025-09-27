@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import I18nProvider from './providers/i18nProvider';
+import { TransactionsProvider } from "./context/transactionsContext";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,7 +18,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
       <I18nProvider>
+        <TransactionsProvider>
           {children}
+          </TransactionsProvider>
         </I18nProvider>      
         </body>
     </html>

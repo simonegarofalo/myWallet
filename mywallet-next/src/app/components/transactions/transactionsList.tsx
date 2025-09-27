@@ -18,7 +18,7 @@ export default function TransactionsList() {
     const { t, i18n } = useTranslation();
     const { transactions, removeTransaction } = useTransactions();
 
-    const [isVisible, setIsVisible] = useState(true);
+    const [isVisible, setIsVisible] = useState(false);
     const toggleVisibility = () => setIsVisible((prev) => !prev);
     
     const getCategoryLabel = (tx: typeof transactions[0]) => {
@@ -35,8 +35,8 @@ const getTypeLabel = (tx: typeof transactions[0]) => {
 
   return (
     <section className="expenses-wrapper">
-      <div className="transactions-content" id="show-transactions" onClick={toggleVisibility} style={{ cursor: 'pointer' }}>
-        <h2 id="show-recent" data-key="table.showRecent">
+      <div className="transactions-content" onClick={toggleVisibility} style={{ cursor: 'pointer' }}>
+        <h2>
           {t('table.showRecent')}
         </h2>
         <Image

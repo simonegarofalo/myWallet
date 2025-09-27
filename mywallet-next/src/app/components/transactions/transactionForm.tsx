@@ -50,7 +50,7 @@ export default function TransactionForm({ type, onDismiss }: TransactionFormProp
 
   return (
     <section>
-      <h3 className="form-title">{formTitle}</h3>
+      <h3 className="form-title"><b>{formTitle}</b></h3>
       <form className="form" onSubmit={handleSubmit}>
         <label>
           <span className="form-label">{t("forms.formLabel.dateLabel")}</span>

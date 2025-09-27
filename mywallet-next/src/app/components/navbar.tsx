@@ -23,7 +23,7 @@ export default function Navbar() {
           <Image src="/dark-mode-logo.svg" alt="myWallet-logo" width={40} height={40} />
         </div>
         <div className="icons-wrapper">
-          <div id="notifications-icon" className="icon-container news"
+          <div id="notifications-icon" className="icon-container notifications"
           onClick={() => !supportsHover && setOpenNotifications(!openNotifications)}
           onMouseEnter={() => supportsHover && setOpenNotifications(true)}
           onMouseLeave={() => supportsHover && setOpenNotifications(false)}>

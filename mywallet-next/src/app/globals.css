@@ -105,21 +105,60 @@ nav {
   width: 20px;
   height: 20px;
 }
-.news {
+.notifications {
   position: relative;
 }
+#notifications-icon img:hover {
+  animation: ring 0.5s ease-in-out;
+  transform-origin: top center; /* Ruota intorno alla punta della campanella */
+}
+
+@keyframes ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  15% {
+    transform: rotate(-25deg);
+  }
+  30% {
+    transform: rotate(25deg);
+  }
+  45% {
+    transform: rotate(-15deg);
+  }
+  60% {
+    transform: rotate(15deg);
+  }
+  75% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+#settings-icon img:hover {
+  animation: rotate 0.5s ease-in;
+}
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
+}
 .updates-box {
-  width: 80%;
+  width: 70%;
   max-height: 200px;
 
   position: absolute;
-  top: 80px;
+  top: 85px;
   right: 0;
   z-index: 1;
 
   background-color: #ffffff;
   border-radius: 15px;
-  margin: 0 1rem;
+  margin: -1rem 1rem;
   padding: 1rem;
   color: #000000;
   transition: 0.5s ease-in-out;
@@ -168,7 +207,7 @@ nav {
 }
 .settings-menu {
   width: 100%;
-  height: 100%;
+  height: 100svh;
 
   display: flex;
   flex-direction: column;

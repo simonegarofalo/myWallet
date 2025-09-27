@@ -1,0 +1,39 @@
+'use client';
+
+import { useTranslation } from 'react-i18next';
+import Image from "next/image"
+import Link from "next/link"
+
+type NotificationsProps = {
+  open: boolean;
+  setOpen: (value: boolean) => void;
+  supportsHover: boolean;
+};
+
+export default function Notifications({ open, setOpen, supportsHover }: NotificationsProps) {
+  const { t } = useTranslation();
+  return (
+    <div
+      id="updates-box"
+      className={`updates-box ${open ? "" : "obscure"}`}
+      onMouseEnter={() => supportsHover && setOpen(true)}
+      onMouseLeave={() => supportsHover && setTimeout(() => setOpen(false), 150)}
+    >
+      <p>{t('newsMessage.githubLink')}</p>
+      <div className="green-circle">
+        <div className="pulsing green-circle-shadow"></div>
+      </div>
+      <div className="github-wrapper">
+        <Image
+          src="/icons/github-icon.svg"
+          alt="github-icon"
+          width={20}
+          height={20}
+        />
+        <Link href="https://github.com/simonegarofalo/myWallet">
+          https://github.com/simonegarofalo/myWallet
+        </Link>
+      </div>
+    </div>
+  )
+}

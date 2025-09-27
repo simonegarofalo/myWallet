@@ -32,24 +32,24 @@
       },
       "expensesCategories": {
           "all": "Tutte le categorie",
-          "food": "Cibo",
-          "transport": "Trasporti",
-          "clothing": "Abbigliamento",
-          "health": "Salute e benessere",
-          "bills": "Bollette",
-          "housing": "Mutuo e affitto",
-          "travel": "Viaggi",
-          "education": "Formazione",
-          "gifts": "Regali",
-          "other": "Altro"
-      },
-      "incomeCategories": {
-          "all": "Tutte le categorie",
-          "salary": "Stipendio",
-          "bonus": "Bonus",
-          "sales": "Vendite",
-          "gifts": "Regali",
-          "other": "Altro"
+          "food": "🍔 Cibo",
+          "transport": "🚘 Trasporti",
+          "clothing": "👕 Abbigliamento",
+          "health": "🧖‍♂️ Salute e benessere",
+          "bills": "🔌 Bollette",
+          "housing": "🏡 Mutuo e affitto",
+          "travel": "🗺️ Viaggi",
+          "education": "🎓 Educazione",
+          "gifts": "🎁 Regali",
+          "other": "💳 Altro"
+  },
+  "incomeCategories": {
+      "all": "All categories",
+      "salary": "🏦 Stipendio",
+      "bonus": "💶 Bonus",
+      "sales": "💰 Vendite",
+      "gifts": "🤑 Regali",
+      "other": "💲 Altro"
   }
     },
     "alerts": {

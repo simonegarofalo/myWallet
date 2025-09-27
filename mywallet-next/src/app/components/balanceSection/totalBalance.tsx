@@ -13,7 +13,7 @@ export default function TotalBalance({ total} : TotalBalanceProps) {
         <div className="total-balance-wrapper">
           <span>{t('totals.balance')}</span>
           <div className="total-value-wrapper">
-            <p className="total-balance">{total.toFixed(2)}</p>
+            <p className="total-balance">{total.toFixed(2)} €</p>
           </div>
         </div>
     )

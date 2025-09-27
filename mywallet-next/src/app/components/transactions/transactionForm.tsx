@@ -67,7 +67,7 @@ export default function TransactionForm({ type, onDismiss }: TransactionFormProp
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           required>
-            <option value="">{t("forms.formLabel.categoryLabel")}</option>
+            <option value="">{t("forms.expensesCategories.all")}</option>
             {categoriesTranslated.map((c) => (
                 <option key={c.value} value={c.value}>
                     {c.label}
@@ -81,7 +81,7 @@ export default function TransactionForm({ type, onDismiss }: TransactionFormProp
             type="number"
             inputMode="decimal"
             value={amount}
-            placeholder="0.00"
+            placeholder="0.00€"
             step="0.01"
             min="0"
             onChange={(e) => setAmount(e.target.value ? Number(e.target.value) : "")}
@@ -89,15 +89,15 @@ export default function TransactionForm({ type, onDismiss }: TransactionFormProp
           />
         </label>
         <div className="form-controls-wrapper">
-          <button type="submit" className="add-new form-button">
-            {t("buttons.addNew")}
-          </button>
-          <button
+        <button
             type="button"
-            className="dismiss-button"
+            className="form-button dismiss-button"
             onClick={onDismiss}
           >
             {t("buttons.dismiss")}
+          </button>
+          <button type="submit" className="confirm-button">
+            {t("buttons.addNew")}
           </button>
         </div>
       </form>

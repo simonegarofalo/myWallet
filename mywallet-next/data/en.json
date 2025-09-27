@@ -31,24 +31,24 @@
       },
       "expensesCategories": {
           "all": "All categories",
-          "food": "Food",
-          "transport": "Transport",
-          "clothing": "Clothing",
-          "health": "Health & Wellness",
-          "bills": "Bills",
-          "housing": "Housing & Rent",
-          "travel": "Travel",
-          "education": "Education",
-          "gifts": "Gifts",
-          "other": "Other"
+          "food": "🍔 Food",
+          "transport": "🚘 Transport",
+          "clothing": "👕 Clothing",
+          "health": "🧖‍♂️ Health & Wellness",
+          "bills": "🔌 Bills",
+          "housing": "🏡 Housing & Rent",
+          "travel": "🗺️ Travel",
+          "education": "🎓 Education",
+          "gifts": "🎁 Gifts",
+          "other": "💳 Other"
   },
   "incomeCategories": {
       "all": "All categories",
-      "salary": "Salary",
-      "bonus": "Bonus",
-      "sales": "Sales",
-      "gifts": "Gifts",
-      "other": "Other"
+      "salary": "🏦 Salary",
+      "bonus": "💶 Bonus",
+      "sales": "💰 Sales",
+      "gifts": "🤑 Gifts",
+      "other": "💲 Other"
   }
     },
     "alerts": {

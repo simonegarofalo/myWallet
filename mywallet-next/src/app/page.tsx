@@ -1,7 +1,7 @@
 import Navbar from "./components/navbar";
 import BalanceSection from "./components/balanceSection/balanceSection";
-import TransactionButtons from "./components/transactions/transactionButtons";
 import TransactionFormsHandler from "./components/transactions/transactionFormHandler";
+import TransactionsList from "./components/transactions/transactionsList";
 
 export default function Home() {
   return (
@@ -10,6 +10,7 @@ export default function Home() {
     <main>
     <BalanceSection/>
     <TransactionFormsHandler />
+    <TransactionsList />
     </main>
     </>
   );

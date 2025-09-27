@@ -1,5 +1,6 @@
-"use client"
+'use client';
 
+import { useTranslation } from 'react-i18next';
 import Image from "next/image"
 import Link from "next/link"
 
@@ -10,6 +11,7 @@ type NotificationsProps = {
 };
 
 export default function Notifications({ open, setOpen, supportsHover }: NotificationsProps) {
+  const { t, i18n } = useTranslation();
   return (
     <div
       id="updates-box"
@@ -17,7 +19,7 @@ export default function Notifications({ open, setOpen, supportsHover }: Notifica
       onMouseEnter={() => supportsHover && setOpen(true)}
       onMouseLeave={() => supportsHover && setOpen(false)}
     >
-      <p data-key="newsMessage.githubLink"></p>
+      <p>{t('newsMessage.githubLink')}</p>
       <div className="green-circle">
         <div className="pulsing green-circle-shadow"></div>
       </div>

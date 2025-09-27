@@ -1,0 +1,63 @@
+{
+    "buttons": {
+      "addIncome": "Add income",
+      "addExpenses": "Add expenses",
+      "addNew": "Add new",
+      "dismiss": "Dismiss",
+      "languageSelection": "Choose a language"
+    },
+    "totals": {
+      "balance": "TOTAL BALANCE",
+      "income": "TOTAL INCOME",
+      "expenses": "TOTAL EXPENSES"
+    },
+    "table": {
+      "date": "Date",
+      "category": "Category",
+      "type": "Type",
+      "amount": "Amount",
+      "actions": "Actions",
+      "showRecent": "Show recent",
+      "noTransactions": "There are no transactions"
+    },
+    "forms": {
+      "expensesCategory": "expenses",
+      "incomeCategory": "income",
+      "formTitle": "Add new <span class='highlight'>{{type}}</span>",
+      "formLabel":{
+          "dateLabel": "Select a date:",
+          "categoryLabel": "Select a category:",
+          "amountLabel": "Select an amount:"
+      },
+      "expensesCategories": {
+          "all": "All categories",
+          "food": "Food",
+          "transport": "Transport",
+          "clothing": "Clothing",
+          "health": "Health & Wellness",
+          "bills": "Bills",
+          "housing": "Housing & Rent",
+          "travel": "Travel",
+          "education": "Education",
+          "gifts": "Gifts",
+          "other": "Other"
+  },
+  "incomeCategories": {
+      "all": "All categories",
+      "salary": "Salary",
+      "bonus": "Bonus",
+      "sales": "Sales",
+      "gifts": "Gifts",
+      "other": "Other"
+  }
+    },
+    "alerts": {
+      "emptyFields": "⚠️ All fields are required ⚠️",
+      "deleteTransaction": "Delete this transaction?",
+      "confirm": "Confirm",
+      "cancel": "Cancel"
+    },
+    "newsMessage": {
+      "githubLink": "Have you already checked the project repository on my GitHub? This project is open source so feel free to fork, use it, or contribute."
+    }
+  }

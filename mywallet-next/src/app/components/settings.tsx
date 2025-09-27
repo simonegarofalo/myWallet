@@ -1,7 +1,6 @@
-"use client";
+'use client';
 
 import Image from "next/image"
-import languageSelector from "./languageSelector";
 import LanguageSelector from "./languageSelector";
 
 export default function Settings({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {

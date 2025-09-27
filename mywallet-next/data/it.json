@@ -1,0 +1,64 @@
+{
+    "buttons": {
+      "addIncome": "Aggiungi entrata",
+      "addExpenses": "Aggiungi uscita",
+      "addNew": "Aggiungi",
+      "dismiss": "Annulla",
+      
+      "languageSelection": "Seleziona una lingua"
+    },
+    "totals": {
+      "balance": "SALDO TOTALE",
+      "income": "TOTALE ENTRATE",
+      "expenses": "TOTALE USCITE"
+    },
+    "table": {
+      "date": "Data",
+      "category": "Categoria",
+      "type": "Tipo",
+      "amount": "Importo",
+      "actions": "Azioni",
+      "showRecent": "Mostra recenti",
+      "noTransactions": "Non sono presenti transazioni"
+    },
+    "forms": {
+      "expensesCategory": "uscita",
+      "incomeCategory": "entrata",
+      "formTitle": "Aggiungi nuova <span class='highlight'>{{type}}</span>",
+      "formLabel":{
+          "dateLabel": "Seleziona una data:",
+          "categoryLabel": "Seleziona una categoria:",
+          "amountLabel": "Seleziona un importo:"
+      },
+      "expensesCategories": {
+          "all": "Tutte le categorie",
+          "food": "Cibo",
+          "transport": "Trasporti",
+          "clothing": "Abbigliamento",
+          "health": "Salute e benessere",
+          "bills": "Bollette",
+          "housing": "Mutuo e affitto",
+          "travel": "Viaggi",
+          "education": "Formazione",
+          "gifts": "Regali",
+          "other": "Altro"
+      },
+      "incomeCategories": {
+          "all": "Tutte le categorie",
+          "salary": "Stipendio",
+          "bonus": "Bonus",
+          "sales": "Vendite",
+          "gifts": "Regali",
+          "other": "Altro"
+  }
+    },
+    "alerts": {
+      "emptyFields": "⚠️ Tutti i campi sono obbligatori ⚠️",
+      "deleteTransaction": "Eliminare questa transazione?",
+      "confirm": "Conferma",
+      "cancel": "Annulla"
+    },
+    "newsMessage": {
+      "githubLink": "Hai già dato un’occhiata al repository del progetto su GitHub? Questo progetto è open source, quindi sentiti libero di fare un fork, usarlo o contribuire."
+    }
+  }

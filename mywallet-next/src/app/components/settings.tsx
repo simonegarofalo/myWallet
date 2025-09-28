@@ -1,9 +1,13 @@
 'use client';
 
+import { useTheme } from "../hooks/useTheme";
 import Image from "next/image"
 import LanguageSelector from "./languageSelector";
+import ThemeSelector from "./themeSelector"
 
 export default function Settings({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  const { theme } = useTheme();
+  const logo = theme === 'light' ? '/light-mode-logo.svg' : '/dark-mode-logo.svg';
     return (
         <div className={`settings-menu ${ isOpen ? "" : "hidden"}`}>
         <div className="main-menu-wrapper">
@@ -16,12 +20,15 @@ export default function Settings({ isOpen, onClose }: { isOpen: boolean; onClose
           </div>
         </div>
         <LanguageSelector />
+        <ThemeSelector />
+        <div className="secondary-logo">
         <Image
-          src="/dark-mode-logo.svg"
+          src={logo}
           alt="myWallet-logo"
-          className="secondary-logo"
           width={40} height={40}
         />
+          <span>myWallet</span>
+        </div>
       </div>
     )
 }

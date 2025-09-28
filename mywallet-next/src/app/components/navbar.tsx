@@ -1,26 +1,32 @@
 'use client';
 
 import { useState, useEffect } from "react";
+import { useTheme } from "../hooks/useTheme";
 import Image from "next/image"
 import Notifications from "./notifications";
 import Settings from "./settings"
 
+
 export default function Navbar() {
-        const [isSettingsOpen, setIsSettingsOpen] = useState (false);
-        const [openNotifications, setOpenNotifications] = useState(false)
-        const [supportsHover, setSupportsHover] = useState(false);
+  const { theme } = useTheme();
+  const [isSettingsOpen, setIsSettingsOpen] = useState (false);
+  const [openNotifications, setOpenNotifications] = useState(false)
+  const [supportsHover, setSupportsHover] = useState(false);
+  
+  useEffect(() => {
+    if(typeof window !== "undefined") {
+      setSupportsHover(window.matchMedia("(hover: hover)").matches);
+    }
+  }, []);
 
-        useEffect(() => {
-            if(typeof window !== "undefined") {
-                setSupportsHover(window.matchMedia("(hover: hover)").matches);
-            }
-        }, [])
+  const logo = theme === 'light' ? '/light-mode-logo.svg' : '/dark-mode-logo.svg';
 
-    return (
-        <header>
-      <nav>
-        <div className="logo-wrapper">
-          <Image src="/dark-mode-logo.svg" alt="myWallet-logo" width={40} height={40} />
+  
+  return (
+  <header>
+    <nav>
+      <div className="logo-wrapper">
+        <Image src={logo} alt="myWallet-logo" width={60} height={60} />
         </div>
         <div className="icons-wrapper">
           <div id="notifications-icon" className="icon-container notifications"
@@ -49,7 +55,7 @@ export default function Navbar() {
           </div>
           <Settings isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
         </div>
-      </nav>
-    </header>
+    </nav>
+  </header>
     )
 }

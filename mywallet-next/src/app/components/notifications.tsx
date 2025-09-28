@@ -1,5 +1,6 @@
 'use client';
 
+import { useTheme } from "../hooks/useTheme";
 import { useTranslation } from 'react-i18next';
 import Image from "next/image"
 import Link from "next/link"
@@ -12,6 +13,8 @@ type NotificationsProps = {
 
 export default function Notifications({ open, setOpen, supportsHover }: NotificationsProps) {
   const { t } = useTranslation();
+  const { theme } = useTheme();
+  const githubIcon = theme === 'light' ? '/icons/light-mode-github-icon.svg' : '/icons/dark-mode-github-icon.svg';
   return (
     <div
       id="updates-box"
@@ -25,7 +28,7 @@ export default function Notifications({ open, setOpen, supportsHover }: Notifica
       </div>
       <div className="github-wrapper">
         <Image
-          src="/icons/github-icon.svg"
+          src={githubIcon}
           alt="github-icon"
           width={20}
           height={20}

@@ -3,6 +3,7 @@ import "./globals.css";
 
 import I18nProvider from './providers/i18nProvider';
 import { TransactionsProvider } from "./context/transactionsContext";
+import { ThemeProvider } from "./context/themeContext";
 
 export const metadata: Metadata = {
   title: "myWallet | The easiest way to track your finance",
@@ -25,7 +26,9 @@ export default function RootLayout({
       <body>
       <I18nProvider>
         <TransactionsProvider>
+          <ThemeProvider>
           {children}
+          </ThemeProvider>
           </TransactionsProvider>
         </I18nProvider>      
         </body>

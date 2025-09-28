@@ -1,5 +1,6 @@
 'use client';
 
+import { useTheme } from "../../hooks/useTheme";
 import { useState } from 'react';
 import AlertModal from '../alertModal';
 import { useTransactions } from '../../hooks/useTransactions';
@@ -53,13 +54,16 @@ export default function TransactionsList() {
     return tx.type === 'income' ? t('forms.incomeCategory') : t('forms.expensesCategory');
   };
 
+  const { theme } = useTheme();
+  const arrow = theme === 'light' ? '/icons/light-mode-arrow-down.svg' : '/icons/dark-mode-arrow-down.svg';
+
   return (
     <section className="expenses-wrapper">
       <div className="transactions-content" onClick={toggleVisibility} style={{ cursor: 'pointer' }}>
         <h2>{t('table.showRecent')}</h2>
         <Image
           id="icon-toggle"
-          src="/icons/dark-mde-arrow-down.svg"
+          src={arrow}
           alt="arrow-toggle"
           width={20}
           height={20}

@@ -1,7 +1,24 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
 
 :root {
+  --bg-color: #000000;
+  --balance-section-bg: #151515;
+  --secondary-bg: #282828;
+  --text-color: #ffffff;
+  --shadow: none;
+  --hover-bg: #ffffff;
+  --hover-color: #000000;
+  --icon-bg: #282828;
+}
+[data-theme="light"] {
+  --bg-color: #ffffff;
+  --balance-section-bg: #ffffff;
+  --secondary-bg: #ffffff;
+  --text-color: #000000;
   --shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --hover-bg: #000000;
+  --hover-color: #ffffff;
+  --icon-bg: #000000;
 }
 * {
   margin: 0;
@@ -12,7 +29,8 @@ body {
   font-family: "Lato", sans-serif;
   font-size: 16px;
 
-  background-color: #000000;
+  background-color: var(--bg-color);
+  color: var(--text-color);
 
   overflow-x: hidden;
 }
@@ -51,14 +69,14 @@ section h3 {
   gap: 0.5rem;
 
   font-size: 1rem;
-  background-color: #282828;
-  color: #ffffff;
+  color: var(--text-color);
+  background-color: var(--secondary-bg);
   border-radius: 8px;
   transition: 0.3s ease-in-out;
 }
 button {
   font-size: 1rem;
-  color: #ffffff;
+  color: var(--text-color);
   padding: 0.5rem 1rem;
   border-radius: 8px;
   border: none;
@@ -68,8 +86,8 @@ button {
   cursor: pointer;
 }
 .form-button:hover {
-  background-color: #ffffff;
-  color: #000000;
+  background-color: var(--hover-bg);
+  color: var(--hover-color);
   transform: scale(1.05);
   transition: 0.2s ease-in-out;
 }
@@ -95,7 +113,7 @@ nav {
   width: 40px;
   height: 40px;
   border-radius: 100%;
-  background-color: #282828;
+  background-color: var(--icon-bg);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -110,9 +128,8 @@ nav {
 }
 #notifications-icon img:hover {
   animation: ring 0.5s ease-in-out;
-  transform-origin: top center; /* Ruota intorno alla punta della campanella */
+  transform-origin: top center;
 }
-
 @keyframes ring {
   0% {
     transform: rotate(0deg);
@@ -156,11 +173,11 @@ nav {
   right: 0;
   z-index: 1;
 
-  background-color: #ffffff;
+  background-color: var(--hover-bg);
+  color: var(--hover-color);
   border-radius: 15px;
   margin: -1rem 1rem;
   padding: 1rem;
-  color: #000000;
   transition: 0.5s ease-in-out;
 }
 .updates-box p {
@@ -199,7 +216,7 @@ nav {
 }
 .github-wrapper a {
   font-size: 12px;
-  color: #000000;
+  color: var(--hover-color);
   text-decoration: underline;
 }
 .github-wrapper img {
@@ -220,19 +237,20 @@ nav {
   z-index: 99;
 
   padding: 1.5rem 1rem;
-  background-color: #151515;
-  color: #ffffff;
-  border-bottom-left-radius: 15px;
+  background-color: var(--bg-color);
+  color: var(--text-color);
   opacity: 98%;
 }
-.language-wrapper {
+.setting-wrapper {
   width: 100%;
 
   display: flex;
   align-items: center;
   flex-direction: column;
 
-  background-color: #282828;
+  background-color: var(--secondary-bg);
+  color: var(--text-color);
+  box-shadow: var(--shadow);
   padding: 3rem 1rem;
   border-radius: 15px;
   text-align: center;
@@ -246,8 +264,15 @@ nav {
 .secondary-logo {
   width: 40px;
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
   justify-self: end;
+  flex-direction: column;
   margin: auto 0 0 0;
+}
+.secondary-logo span {
+  line-height: 0.5rem;
 }
 .logo-wrapper {
   width: 100%;
@@ -258,12 +283,6 @@ nav {
 
   font-size: 0.8rem;
   margin: 1.5rem 0;
-
-  color: #ffffff;
-}
-.logo-wrapper img {
-  width: 50px;
-  height: 50px;
 }
 .main-menu-wrapper {
   display: flex;
@@ -292,7 +311,8 @@ main {
 .total-balance-wrapper {
   width: 100%;
 
-  background-color: #151515;
+  background-color: var(--balance-section-bg);
+  box-shadow: var(--shadow);
   border-radius: 15px;
   padding: 1rem;
 }
@@ -300,7 +320,7 @@ main {
   color: #868686;
 }
 .total-balance-wrapper p {
-  color: #ffffff;
+  color: var(--text-color);
 }
 .total-value-wrapper {
   display: flex;
@@ -356,11 +376,12 @@ main {
   justify-content: space-between;
 
   margin-top: 1rem;
-  background-color: #282828;
+  background-color: var(--secondary-bg);
+  box-shadow: var(--shadow);
   border-radius: 15px;
 }
 .balance-content p {
-  color: #ffffff;
+  color: var(--text-color);
   font-size: 1.4rem;
 }
 .expenses-category,
@@ -391,10 +412,7 @@ main {
 .form-title {
   font-weight: normal;
   margin: 3rem 0 2rem;
-  color: #ffffff;
-}
-.form-title .highlight {
-  font-weight: bolder;
+  color: var(--text-color);
 }
 form {
   width: 100%;
@@ -442,7 +460,7 @@ form {
   cursor: pointer;
 }
 label span {
-  color: #ffffff;
+  color: var(--text-color);
   font-size: 1.1rem;
   line-height: 2rem;
   margin-left: 0.5rem;
@@ -462,9 +480,13 @@ label span {
   height: 3rem;
 
   background-color: green;
+  color: #ffffff;
 }
 .confirm-button:hover {
   transform: scale(1.05);
+}
+.dismiss-button {
+  box-shadow: none;
 }
 .dismiss-button:hover {
   transform: scale(1.05);
@@ -498,6 +520,7 @@ label span {
 
   padding: 1rem 2rem;
   background-color: #eeeeee;
+  color: #000000;
   border-radius: 8px;
   transform: translate(-50%);
   box-shadow: var(--shadow);
@@ -509,6 +532,7 @@ label span {
 }
 .modal-btn.confirm {
   background-color: #000000;
+  color: #ffffff;
 }
 .modal-btn.cancel {
   color: #000000;
@@ -537,7 +561,7 @@ label span {
 
   margin-bottom: 1rem;
 
-  color: #ffffff;
+  color: var(--text-color);
   cursor: pointer;
 }
 .transactions-list {
@@ -549,7 +573,7 @@ label span {
   gap: 1rem;
 }
 .no-transactions {
-  color: #ffffff;
+  color: var(--text-color);
 }
 .transaction-info {
   width: 100%;
@@ -557,7 +581,8 @@ label span {
   flex-direction: column;
   gap: 0.5rem;
 
-  background-color: #151515;
+  background-color: var(--balance-section-bg);
+  box-shadow: var(--shadow);
   color: #868686;
   padding: 1rem 1.5rem;
   border-radius: 8px;
@@ -567,7 +592,7 @@ label span {
 .transaction-info .transaction-category {
   font-size: 1.4rem;
   text-align: start;
-  color: #ffffff;
+  color: var(--text-color);
 }
 .transaction-details {
   display: flex;
@@ -628,7 +653,7 @@ label span {
 
   margin-top: 1rem;
 }
-.lang-wrapper {
+.feature-wrapper {
   width: 100%;
 
   display: flex;
@@ -646,6 +671,17 @@ label span {
 }
 .lang-flag:hover {
   transform: scale(1.05);
+}
+.theme-toggle {
+  box-shadow: none;
+  background-color: transparent;
+}
+.theme-toggle img {
+  transition: opacity 0.3s ease-in-out;
+  opacity: 1;
+}
+.theme-toggle img.fade-out {
+  opacity: 0;
 }
 @media (max-width: 350px) {
   button {
@@ -711,7 +747,6 @@ label span {
     padding: 1.5rem 40rem;
   }
 }
-
 @media (max-width: 768px) {
   .alert-error {
     width: 100%;

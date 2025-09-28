@@ -5,7 +5,8 @@
       "addNew": "Aggiungi",
       "dismiss": "Annulla",
       
-      "languageSelection": "Seleziona una lingua"
+      "languageSelection": "Seleziona una lingua:",
+      "themeSelection": "Seleziona il tema:"
     },
     "totals": {
       "balance": "SALDO TOTALE",

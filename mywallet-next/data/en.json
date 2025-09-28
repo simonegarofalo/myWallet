@@ -4,7 +4,9 @@
       "addExpenses": "Add expenses",
       "addNew": "Add new",
       "dismiss": "Dismiss",
-      "languageSelection": "Choose a language"
+
+      "languageSelection": "Choose a language:",
+      "themeSelection": "Select theme:"
     },
     "totals": {
       "balance": "TOTAL BALANCE",

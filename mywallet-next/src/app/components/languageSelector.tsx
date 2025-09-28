@@ -9,9 +9,9 @@ export default function LanguageSelector() {
   const { switchLang } = useLang();
 
   return (
-    <div className="language-wrapper">
+    <div className="setting-wrapper">
       <p>{t('buttons.languageSelection')}</p>
-      <div className="lang-wrapper">
+      <div className="feature-wrapper">
         <Image
           src="/icons/uk.png"
           alt="uk-lang"

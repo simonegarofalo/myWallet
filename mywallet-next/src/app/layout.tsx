@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Lato } from 'next/font/google';
 import "./globals.css";
 
 import I18nProvider from './providers/i18nProvider';
@@ -16,13 +17,19 @@ export const metadata: Metadata = {
   },
 };
 
+const lato = Lato({
+  subsets: ['latin'],
+  weight: ['100','300','400','700','900'],
+  variable: '--font-lato',
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={lato.variable}>
       <body>
       <I18nProvider>
         <TransactionsProvider>

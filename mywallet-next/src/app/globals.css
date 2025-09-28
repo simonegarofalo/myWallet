@@ -316,7 +316,7 @@ main {
   padding: 1rem;
 }
 .total-balance-wrapper span {
-  color: #868686;
+  color: #8e8e8e;
 }
 .total-balance-wrapper p {
   color: var(--text-color);
@@ -385,7 +385,7 @@ main {
 }
 .expenses-category,
 .income-category {
-  color: #868686;
+  color: #8e8e8e;
 }
 .income-content,
 .expenses-content {
@@ -582,7 +582,7 @@ label span {
 
   background-color: var(--balance-section-bg);
   box-shadow: var(--shadow);
-  color: #868686;
+  color: #8e8e8e;
   padding: 1rem 1.5rem;
   border-radius: 8px;
 

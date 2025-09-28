@@ -67,7 +67,6 @@ section h3 {
   align-items: center;
   gap: 0.5rem;
 
-  font-size: 1rem;
   color: var(--text-color);
   background-color: var(--secondary-bg);
   border-radius: 8px;
@@ -119,8 +118,8 @@ nav {
   cursor: pointer;
 }
 .icon-container img {
-  width: 20px;
-  height: 20px;
+  width: 28px;
+  height: 28px;
 }
 .notifications {
   position: relative;
@@ -242,9 +241,11 @@ nav {
 }
 .setting-wrapper {
   width: 100%;
+  height: 200px;
 
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
 
   background-color: var(--secondary-bg);
@@ -253,6 +254,9 @@ nav {
   padding: 3rem 1rem;
   border-radius: 15px;
   text-align: center;
+}
+.setting-wrapper p {
+  font-size: 1.1rem;
 }
 .main-menu-wrapper {
   width: 100%;
@@ -381,7 +385,7 @@ main {
 }
 .balance-content p {
   color: var(--text-color);
-  font-size: 1.4rem;
+  font-size: 1.6rem;
 }
 .expenses-category,
 .income-category {
@@ -480,6 +484,7 @@ label span {
 
   background-color: green;
   color: #ffffff;
+  font-size: 1rem;
 }
 .confirm-button:hover {
   transform: scale(1.05);
@@ -583,7 +588,7 @@ label span {
   background-color: var(--balance-section-bg);
   box-shadow: var(--shadow);
   color: #8e8e8e;
-  padding: 1rem 1.5rem;
+  padding: 1rem;
   border-radius: 8px;
 
   position: relative;
@@ -662,14 +667,11 @@ label span {
   margin-top: 1rem;
 }
 .lang-flag {
-  width: 30px;
-  height: 30px;
-
   transition: transform 0.3s ease;
   cursor: pointer;
 }
 .lang-flag:hover {
-  transform: scale(1.05);
+  transform: scale(1.1);
 }
 .theme-toggle {
   box-shadow: none;

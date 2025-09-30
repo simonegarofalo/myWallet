@@ -8,6 +8,7 @@ jest.mock("../hooks/useLang", () => ({
 
 import { useLang } from "../hooks/useLang";
 
+
 describe("LanguageSelector", () => {
   it("renders language selection text", () => {
     (useLang as jest.Mock).mockReturnValue({ switchLang: jest.fn() });

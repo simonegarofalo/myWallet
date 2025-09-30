@@ -1,0 +1,44 @@
+import "@testing-library/jest-dom";
+import { render, screen, fireEvent } from "@testing-library/react";
+import LanguageSelector from "./languageSelector";
+
+jest.mock("../hooks/useLang", () => ({
+  useLang: jest.fn(),
+}));
+
+import { useLang } from "../hooks/useLang";
+
+describe("LanguageSelector", () => {
+  it("renders language selection text", () => {
+    (useLang as jest.Mock).mockReturnValue({ switchLang: jest.fn() });
+
+    render(<LanguageSelector />);
+    expect(screen.getByText(/languageSelection/i)).toBeInTheDocument();
+  });
+
+  it("renders both flags", () => {
+    (useLang as jest.Mock).mockReturnValue({ switchLang: jest.fn() });
+
+    render(<LanguageSelector />);
+    expect(screen.getByAltText("uk-lang")).toBeInTheDocument();
+    expect(screen.getByAltText("ita-lang")).toBeInTheDocument();
+  });
+
+  it("calls switchLang with 'en' when UK flag is clicked", () => {
+    const mockSwitchLang = jest.fn();
+    (useLang as jest.Mock).mockReturnValue({ switchLang: mockSwitchLang });
+
+    render(<LanguageSelector />);
+    fireEvent.click(screen.getByAltText("uk-lang"));
+    expect(mockSwitchLang).toHaveBeenCalledWith("en");
+  });
+
+  it("calls switchLang with 'it' when IT flag is clicked", () => {
+    const mockSwitchLang = jest.fn();
+    (useLang as jest.Mock).mockReturnValue({ switchLang: mockSwitchLang });
+
+    render(<LanguageSelector />);
+    fireEvent.click(screen.getByAltText("ita-lang"));
+    expect(mockSwitchLang).toHaveBeenCalledWith("it");
+  });
+});

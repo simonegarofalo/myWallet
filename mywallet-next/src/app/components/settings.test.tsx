@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
 import Settings from "../components/settings";
-import { ThemeProvider } from "../context/themeContext"; // importa il provider corretto
+import { ThemeProvider } from "../context/themeContext";
 import * as themeHook from "../hooks/useTheme";
 
 jest.mock("../components/languageSelector", () => () => <div data-testid="language-selector" />);

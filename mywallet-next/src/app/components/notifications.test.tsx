@@ -1,21 +1,17 @@
 import { render, screen, fireEvent, act } from "@testing-library/react";
 import Notifications from "./notifications";
 
-// Mock del hook useTheme
 jest.mock("../hooks/useTheme", () => ({
   useTheme: jest.fn(),
 }));
 
-// Mock di i18next
 jest.mock("react-i18next", () => ({
   useTranslation: () => ({
     t: (key: string) => key,
   }),
 }));
 
-// Mock next/image per Jest
 jest.mock("next/image", () => (props: any) => {
-  // eslint-disable-next-line @next/next/no-img-element
   return <img {...props} alt={props.alt} />;
 });
 

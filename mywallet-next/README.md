@@ -1,4 +1,4 @@
-![myWallet](/myWallet.gif)
+![myWallet](./assets/myWallet.gif)
 
 # myWallet
 
@@ -10,7 +10,7 @@ A small web app rebuilt with React, Next.js and Typescript. It lets the user add
 
 ## Demo
 
-This is a static web project. You can preview it locally by running the Next.js app or see it live here: [Live Demo](https://my-wallet-simonegarofalos-projects.vercel.app/).
+This is a static web project. You can preview it locally by running the Next.js app or see it live here: [Live Demo](https://app-mywallet.netlify.app/).
 
 ---
 

@@ -1,4 +1,4 @@
-![myWallet](/myWallet.gif)
+![myWallet](./assets/myWallet.gif)
 
 # myWallet
 

@@ -1,14 +1,16 @@
-![myWallet](./assets/myWallet.gif)
+![myWallet](/myWallet.gif)
 
 # myWallet
 
-**Simple personal finance tracker**. A small web app built with plain HTML, CSS and JavaScript. It lets the user add income and expenses, stores them in `localStorage`, shows totals and a transaction list, and supports deleting items.
+**The easiest way to track your finance**.
+
+A small web app rebuilt with React, Next.js and Typescript. It lets the user add income and expenses, stores them in `localStorage`, shows totals and a transaction list, and supports deleting items.
 
 ---
 
 ## Demo
 
-This is a static web project. You can preview it locally by opening `index.html` in a browser or see it live here: [Live Demo](https://app-mywallet.netlify.app/).
+This is a static web project. You can preview it locally by running the Next.js app or see it live here: [Live Demo](https://my-wallet-simonegarofalos-projects.vercel.app/).
 
 ---
 
@@ -17,9 +19,9 @@ This is a static web project. You can preview it locally by opening `index.html`
 - Add **income** and **expenses** with: date, category and amount.
 - Persists transactions in `localStorage`.
 - View totals: total income, total expenses and balance.
-- Sorts transactions by date (latest first).
+- Sorts transactions by date
 - Delete transactions with confirmation dialog.
-- Simple client-side internationalization using lang.json and data-key attributes
+- Simple client-side internationalization using **useLang** custom hook
 - Fully responsive UI for desktop and mobile.
 
 ---
@@ -28,7 +30,9 @@ This is a static web project. You can preview it locally by opening `index.html`
 
 - HTML5
 - CSS3
-- JavaScript
+- React + Typescript
+- Next.js
+- Testing: Jest + React Testing Library
 - Browser APIs: `localStorage`, `crypto.randomUUID()`
 
 ---
@@ -36,15 +40,31 @@ This is a static web project. You can preview it locally by opening `index.html`
 ## File structure
 
 ```
-myWallet/
-├─ index.html
-├─ style.css
-├─ index.js
-├─ lang.json
-├─ assets/
-│  ├─ myWallet.gif
-│  ├─ logo.png
-│  └─ icons/
+myWallet-next/
+├─ public/
+│  ├─ assets/
+│  │  ├─ myWallet.gif
+│  │  ├─ logo.svg
+│  │  └─ icons/
+├─ src/
+│  ├─ app/
+│  │  ├─ components/
+│  │  │  ├─ balanceSection/
+│  │  │  ├─ transactions/
+│  │  │  ├─ navbar/
+│  │  │  └─ alertModal.tsx
+│  │  │
+│  │  ├─ context/
+│  │  ├─ hooks/
+|  |  ├─ providers/
+|  |  └─ utilities/
+|  |
+│  ├─ global.css
+|  ├─ page.tsx
+│  └─ layout.tsx
+│
+├─ jest.config.js
+├─ package.json
 └─ README.md
 
 
@@ -60,24 +80,29 @@ Each transaction object has this shape in memory:
 {
   id: "string",        // uuid
   type: "income" | "expenses",
-  value: Number,      // float
   category: "string",
-  date: "YYYY-MM-DD"
+  amount: "number",
+  date: "string"
 }
 ```
 
-All transactions are stored as an array in `localStorage` under the `TRANSACTIONS` key.
-UI language choice is saved under the key "myWalletLang"
+All transactions are stored in the React state managed by the TransactionsProvider and automatically persisted to ``localStorage` under the key "transactions".
 
 ---
 
 ## How it works
 
-1. On startup `loadTransactions()` reads `localStorage` and populates the global `TRANSACTIONS` array.
-2. `showTransactions()` renders the table (thead + tbody) built from `TRANSACTIONS`. It sorts by date.
-3. Clicking **Add income / expenses** shows the relevant form via `showForm()`.
-4. When the user submits, `addTransaction(type)` validates inputs, generates an `ID` with `crypto.randomUUID()`, creates a new entry, pushes it to `TRANSACTIONS`, saves it to `localStorage`, updates totals and appends only the new row to the table for performance.
-5. To remove an entry, `deleteTransaction(id)` shows a confirmation dialog, then deletes the item form `TRANSACTIONS`, updates storage and totals and removes the corresponding `<tr>`.
+1. On initialization, the **TransactionsProvider** reads existing data from `localStorage` (if there are) and populates the transactions state.
+2. Every time the `transactions` state changes, the provider synchronizes it back to ``localStorage`, ensuring persistence across sessions.
+3. Adding a transaction is done through `addTransaction(transaction)`, which appends a new Transaction object to the state.
+4. Removing a transaction is handled by `removeTransaction(id)`, which filters out the transaction with the matching ID.
+5. Totals are calculated dynamically with React’s `useMemo`:
+
+- **totalIncome** → sum of all transactions of type "income".
+- **totalExpenses** → sum of all transactions of type "expenses".
+- **totalBalance** → difference between income and expenses.
+
+6. Any component wrapped inside the **TransactionsProvider** can access transactions, totals, and the add/remove functions via the **TransactionsContext**, without needing to pass props manually.
 
 ---
 
@@ -95,8 +120,8 @@ UI language choice is saved under the key "myWalletLang"
 
 - Add a feature to sort transactions by date, amount, category, or type.
 - ✔️ Add multi-language support (EN | IT)
-- Refactor the project using a front-end framework (maybe Astro or React) for better scalability.
-- Integrate a backend with Node.js, Express and MySQL.
+- ✔️ Refactor the project using a front-end framework (maybe Astro or React) for better scalability.
+- Integrate a backend API with Node.js, Express, and MySQL, including authentication and secure data storage.
 
 ---
 

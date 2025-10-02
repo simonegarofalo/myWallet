@@ -6,6 +6,13 @@ jest.mock("../../hooks/useTheme", () => ({
   useTheme: jest.fn(),
 }));
 
+jest.mock("../../hooks/useLang", () => ({
+  useLang: () => ({
+    switchLang: jest.fn(),
+    isReady: true,
+  }),
+}));
+
 jest.mock("react-i18next", () => ({
   useTranslation: () => ({ t: (key: string) => key }),
 }));

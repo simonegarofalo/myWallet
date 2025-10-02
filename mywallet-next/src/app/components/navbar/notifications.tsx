@@ -2,6 +2,7 @@
 
 import { useTheme } from "../../hooks/useTheme";
 import { useTranslation } from "react-i18next";
+import { useLang } from "../../hooks/useLang";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -16,12 +17,16 @@ export default function Notifications({
   setOpen,
   supportsHover,
 }: NotificationsProps) {
+  const { isReady } = useLang();
   const { t } = useTranslation();
   const { theme } = useTheme();
   const githubIcon =
     theme === "light"
       ? "/icons/light-mode-github-icon.svg"
       : "/icons/dark-mode-github-icon.svg";
+
+  if (!isReady) return null;
+
   return (
     <div
       id="updates-box"

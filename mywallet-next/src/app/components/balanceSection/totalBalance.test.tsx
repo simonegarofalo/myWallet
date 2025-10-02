@@ -1,6 +1,13 @@
 import { render, screen } from "@testing-library/react";
 import TotalBalance from "./totalBalance";
 
+jest.mock("../../hooks/useLang", () => ({
+  useLang: () => ({
+    switchLang: jest.fn(),
+    isReady: true,
+  }),
+}));
+
 jest.mock("react-i18next", () => ({
   useTranslation: () => ({
     t: (key: string) => key,

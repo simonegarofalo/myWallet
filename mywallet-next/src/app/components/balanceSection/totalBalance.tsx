@@ -1,20 +1,24 @@
-'use client';
+"use client";
 
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
+import { useLang } from "../../hooks/useLang";
 
 type TotalBalanceProps = {
-    total: number;
-}
+  total: number;
+};
 
-export default function TotalBalance({ total} : TotalBalanceProps) {
-    const { t } = useTranslation();
+export default function TotalBalance({ total }: TotalBalanceProps) {
+  const { isReady } = useLang();
+  const { t } = useTranslation();
 
-    return(
-        <div className="total-balance-wrapper">
-          <span>{t('totals.balance')}</span>
-          <div className="total-value-wrapper">
-            <p className="total-balance">{total.toFixed(2)} €</p>
-          </div>
-        </div>
-    )
+  if (!isReady) return null;
+
+  return (
+    <div className="total-balance-wrapper">
+      <span>{t("totals.balance")}</span>
+      <div className="total-value-wrapper">
+        <p className="total-balance">{total.toFixed(2)} €</p>
+      </div>
+    </div>
+  );
 }

@@ -1,12 +1,14 @@
 "use client";
 
-import { useLang } from "../../hooks/useLang";
 import { useTranslation } from "react-i18next";
+import { useLang } from "../../hooks/useLang";
 import Image from "next/image";
 
 export default function LanguageSelector() {
   const { t } = useTranslation();
-  const { switchLang } = useLang();
+  const { switchLang, isReady } = useLang();
+
+  if (!isReady) return null;
 
   return (
     <div className="setting-wrapper">

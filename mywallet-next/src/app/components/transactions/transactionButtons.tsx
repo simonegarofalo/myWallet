@@ -1,13 +1,19 @@
-'use client';
+"use client";
 
 import { useTranslation } from "react-i18next";
+import { useLang } from "../../hooks/useLang";
 
 type TransactionButtonsProps = {
   onClick: (type: "income" | "expenses") => void;
 };
 
-export default function TransactionButtons({ onClick }: TransactionButtonsProps) {
+export default function TransactionButtons({
+  onClick,
+}: TransactionButtonsProps) {
+  const { isReady } = useLang();
   const { t } = useTranslation();
+
+  if (!isReady) return null;
 
   return (
     <div className="transactions-wrapper">

@@ -1,6 +1,7 @@
-'use client';
+"use client";
 
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
+import { useLang } from "../../hooks/useLang";
 
 type TransactionButtonProps = {
   labelKey: string;
@@ -8,8 +9,15 @@ type TransactionButtonProps = {
   onClick: () => void;
 };
 
-export default function TransactionButton({ labelKey, ariaLabel, onClick }: TransactionButtonProps) {
+export default function TransactionButton({
+  labelKey,
+  ariaLabel,
+  onClick,
+}: TransactionButtonProps) {
+  const { isReady } = useLang();
   const { t } = useTranslation();
+
+  if (!isReady) return null;
 
   return (
     <button

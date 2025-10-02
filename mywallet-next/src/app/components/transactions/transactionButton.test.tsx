@@ -1,6 +1,13 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import TransactionButton from "./transactionButton";
 
+jest.mock("../../hooks/useLang", () => ({
+  useLang: () => ({
+    switchLang: jest.fn(),
+    isReady: true,
+  }),
+}));
+
 jest.mock("react-i18next", () => ({
   useTranslation: () => ({
     t: (key: string) => key,
@@ -25,7 +32,10 @@ describe("TransactionButton component", () => {
 
     expect(screen.getByText("submitTransaction")).toBeInTheDocument();
 
-    expect(screen.getByRole("button")).toHaveAttribute("aria-label", "submit-button");
+    expect(screen.getByRole("button")).toHaveAttribute(
+      "aria-label",
+      "submit-button"
+    );
   });
 
   it("calls onClick when button is clicked", () => {

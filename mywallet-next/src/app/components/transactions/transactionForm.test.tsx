@@ -1,6 +1,13 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import TransactionForm from "./transactionForm";
 
+jest.mock("../../hooks/useLang", () => ({
+  useLang: () => ({
+    switchLang: jest.fn(),
+    isReady: true,
+  }),
+}));
+
 jest.mock("react-i18next", () => ({
   useTranslation: () => ({
     t: (key: string) => key,
@@ -24,10 +31,18 @@ describe("TransactionForm component", () => {
   it("renders the form with correct labels for expenses", () => {
     render(<TransactionForm type="expenses" onDismiss={onDismissMock} />);
 
-    expect(screen.getByText("forms.formTitle forms.expensesCategory")).toBeInTheDocument();
-    expect(screen.getByLabelText("forms.formLabel.dateLabel")).toBeInTheDocument();
-    expect(screen.getByLabelText("forms.formLabel.categoryLabel")).toBeInTheDocument();
-    expect(screen.getByLabelText("forms.formLabel.amountLabel")).toBeInTheDocument();
+    expect(
+      screen.getByText("forms.formTitle forms.expensesCategory")
+    ).toBeInTheDocument();
+    expect(
+      screen.getByLabelText("forms.formLabel.dateLabel")
+    ).toBeInTheDocument();
+    expect(
+      screen.getByLabelText("forms.formLabel.categoryLabel")
+    ).toBeInTheDocument();
+    expect(
+      screen.getByLabelText("forms.formLabel.amountLabel")
+    ).toBeInTheDocument();
     expect(screen.getByText("buttons.dismiss")).toBeInTheDocument();
     expect(screen.getByText("buttons.addNew")).toBeInTheDocument();
   });
@@ -42,7 +57,9 @@ describe("TransactionForm component", () => {
     render(<TransactionForm type="expenses" onDismiss={onDismissMock} />);
 
     const dateInput = screen.getByLabelText("forms.formLabel.dateLabel");
-    const categorySelect = screen.getByLabelText("forms.formLabel.categoryLabel");
+    const categorySelect = screen.getByLabelText(
+      "forms.formLabel.categoryLabel"
+    );
     const amountInput = screen.getByLabelText("forms.formLabel.amountLabel");
     const submitButton = screen.getByText("buttons.addNew");
 
@@ -56,7 +73,7 @@ describe("TransactionForm component", () => {
       expect.objectContaining({
         type: "expenses",
         category: "food",
-        amount: 25.50,
+        amount: 25.5,
         date: "2025-10-01",
       })
     );

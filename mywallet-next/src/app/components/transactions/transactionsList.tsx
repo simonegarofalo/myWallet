@@ -1,22 +1,24 @@
-'use client';
+"use client";
 
 import { useTheme } from "../../hooks/useTheme";
-import { useState } from 'react';
-import AlertModal from '../alertModal';
-import { useTransactions } from '../../hooks/useTransactions';
-import { useTranslation } from 'react-i18next';
-import Image from 'next/image';
+import { useState } from "react";
+import AlertModal from "../alertModal";
+import { useTransactions } from "../../hooks/useTransactions";
+import { useTranslation } from "react-i18next";
+import { useLang } from "../../hooks/useLang";
+import Image from "next/image";
 
 const formatDate = (dateString: string, locale: string) => {
   const date = new Date(dateString);
   return new Intl.DateTimeFormat(locale, {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
   }).format(date);
 };
 
 export default function TransactionsList() {
+  const { isReady } = useLang();
   const { t, i18n } = useTranslation();
   const { transactions, removeTransaction } = useTransactions();
 
@@ -42,62 +44,83 @@ export default function TransactionsList() {
     setSelectedTxId(null);
   };
 
-  const getCategoryLabel = (tx: typeof transactions[0]) => {
+  const getCategoryLabel = (tx: (typeof transactions)[0]) => {
     const key =
-      tx.type === 'income'
+      tx.type === "income"
         ? `forms.incomeCategories.${tx.category}`
         : `forms.expensesCategories.${tx.category}`;
     return t(key, tx.category);
   };
 
-  const getTypeLabel = (tx: typeof transactions[0]) => {
-    return tx.type === 'income' ? t('forms.incomeCategory') : t('forms.expensesCategory');
+  const getTypeLabel = (tx: (typeof transactions)[0]) => {
+    return tx.type === "income"
+      ? t("forms.incomeCategory")
+      : t("forms.expensesCategory");
   };
 
   const { theme } = useTheme();
-  const arrow = theme === 'light' ? '/icons/light-mode-arrow-down.svg' : '/icons/dark-mode-arrow-down.svg';
+  const arrow =
+    theme === "light"
+      ? "/icons/light-mode-arrow-down.svg"
+      : "/icons/dark-mode-arrow-down.svg";
+
+  if (!isReady) return null;
 
   return (
     <section className="expenses-wrapper">
-      <div className="transactions-content" onClick={toggleVisibility} style={{ cursor: 'pointer' }}>
-        <h2>{t('table.showRecent')}</h2>
+      <div
+        className="transactions-content"
+        onClick={toggleVisibility}
+        style={{ cursor: "pointer" }}
+      >
+        <h2>{t("table.showRecent")}</h2>
         <Image
           id="icon-toggle"
           src={arrow}
           alt="arrow-toggle"
           width={20}
           height={20}
-          className={isVisible ? 'rotate' : ''}
+          className={isVisible ? "rotate" : ""}
         />
       </div>
 
       {isVisible && (
         <div className="transactions-list">
           {transactions.length === 0 ? (
-            <p className="no-transactions">{t('table.noTransactions')}</p>
+            <p className="no-transactions">{t("table.noTransactions")}</p>
           ) : (
             transactions.map((tx) => (
               <div
                 key={tx.id}
-                className={`transaction-item ${tx.type === 'income' ? 'income' : 'expenses'}`}
+                className={`transaction-item ${
+                  tx.type === "income" ? "income" : "expenses"
+                }`}
               >
                 <div className="transaction-info">
-                  <span className="transaction-category">{getCategoryLabel(tx)}</span>
+                  <span className="transaction-category">
+                    {getCategoryLabel(tx)}
+                  </span>
                   <div className="transaction-details">
                     <div>
-                      <span className="transaction-date">{formatDate(tx.date, i18n.language)}</span>
-                      <span className="transaction-type">{getTypeLabel(tx)}</span>
+                      <span className="transaction-date">
+                        {formatDate(tx.date, i18n.language)}
+                      </span>
+                      <span className="transaction-type">
+                        {getTypeLabel(tx)}
+                      </span>
                     </div>
-                    <span className="transaction-amount">{tx.amount.toFixed(2)} €</span>
+                    <span className="transaction-amount">
+                      {tx.amount.toFixed(2)} €
+                    </span>
                   </div>
                   <button
                     className="delete-transaction"
                     onClick={() => handleDeleteClick(tx.id)}
-                    aria-label={t('alerts.deleteTransaction')}
+                    aria-label={t("alerts.deleteTransaction")}
                   >
                     <Image
                       src="/icons/basket.png"
-                      alt={t('alerts.deleteTransaction')}
+                      alt={t("alerts.deleteTransaction")}
                       width={20}
                       height={20}
                     />
@@ -111,11 +134,11 @@ export default function TransactionsList() {
 
       <AlertModal
         isOpen={modalOpen}
-        message={t('alerts.deleteTransaction')}
+        message={t("alerts.deleteTransaction")}
         onConfirm={handleConfirmDelete}
         onCancel={handleCancelDelete}
-        confirmText={t('alerts.confirm')}
-        cancelText={t('alerts.cancel')}
+        confirmText={t("alerts.confirm")}
+        cancelText={t("alerts.cancel")}
       />
     </section>
   );

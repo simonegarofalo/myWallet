@@ -9,6 +9,13 @@ jest.mock("../../hooks/useTransactions", () => ({
   useTransactions: jest.fn(),
 }));
 
+jest.mock("../../hooks/useLang", () => ({
+  useLang: () => ({
+    switchLang: jest.fn(),
+    isReady: true,
+  }),
+}));
+
 jest.mock("react-i18next", () => ({
   useTranslation: () => ({
     t: (key: string, fallback?: string) => key,
@@ -16,12 +23,15 @@ jest.mock("react-i18next", () => ({
   }),
 }));
 
-jest.mock("next/image", () => (props: any) => <img {...props} alt={props.alt} />);
+jest.mock("next/image", () => (props: any) => (
+  <img {...props} alt={props.alt} />
+));
 
 describe("TransactionsList component", () => {
   const removeTransactionMock = jest.fn();
 
-  const useTransactionsMock = require("../../hooks/useTransactions").useTransactions;
+  const useTransactionsMock =
+    require("../../hooks/useTransactions").useTransactions;
   const useThemeMock = require("../../hooks/useTheme").useTheme;
 
   beforeEach(() => {
@@ -30,14 +40,20 @@ describe("TransactionsList component", () => {
   });
 
   it("renders title and arrow icon", () => {
-    useTransactionsMock.mockReturnValue({ transactions: [], removeTransaction: removeTransactionMock });
+    useTransactionsMock.mockReturnValue({
+      transactions: [],
+      removeTransaction: removeTransactionMock,
+    });
     render(<TransactionsList />);
     expect(screen.getByText("table.showRecent")).toBeInTheDocument();
     expect(screen.getByAltText("arrow-toggle")).toBeInTheDocument();
   });
 
   it("toggles transactions list visibility on click", () => {
-    useTransactionsMock.mockReturnValue({ transactions: [], removeTransaction: removeTransactionMock });
+    useTransactionsMock.mockReturnValue({
+      transactions: [],
+      removeTransaction: removeTransactionMock,
+    });
     render(<TransactionsList />);
     const header = screen.getByText("table.showRecent");
     expect(screen.queryByText("table.noTransactions")).not.toBeInTheDocument();
@@ -49,23 +65,53 @@ describe("TransactionsList component", () => {
 
   it("renders transactions correctly", () => {
     const transactions = [
-      { id: "1", type: "income", category: "salary", amount: 100, date: "2025-10-01" },
-      { id: "2", type: "expenses", category: "food", amount: 50, date: "2025-10-02" },
+      {
+        id: "1",
+        type: "income",
+        category: "salary",
+        amount: 100,
+        date: "2025-10-01",
+      },
+      {
+        id: "2",
+        type: "expenses",
+        category: "food",
+        amount: 50,
+        date: "2025-10-02",
+      },
     ];
-    useTransactionsMock.mockReturnValue({ transactions, removeTransaction: removeTransactionMock });
+    useTransactionsMock.mockReturnValue({
+      transactions,
+      removeTransaction: removeTransactionMock,
+    });
 
     render(<TransactionsList />);
     fireEvent.click(screen.getByText("table.showRecent"));
 
-    expect(screen.getByText("forms.incomeCategories.salary")).toBeInTheDocument();
-    expect(screen.getByText("forms.expensesCategories.food")).toBeInTheDocument();
+    expect(
+      screen.getByText("forms.incomeCategories.salary")
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText("forms.expensesCategories.food")
+    ).toBeInTheDocument();
     expect(screen.getByText("100.00 €")).toBeInTheDocument();
     expect(screen.getByText("50.00 €")).toBeInTheDocument();
   });
 
   it("opens and confirms delete modal", () => {
-    const transactions = [{ id: "1", type: "income", category: "salary", amount: 100, date: "2025-10-01" }];
-    useTransactionsMock.mockReturnValue({ transactions, removeTransaction: removeTransactionMock });
+    const transactions = [
+      {
+        id: "1",
+        type: "income",
+        category: "salary",
+        amount: 100,
+        date: "2025-10-01",
+      },
+    ];
+    useTransactionsMock.mockReturnValue({
+      transactions,
+      removeTransaction: removeTransactionMock,
+    });
 
     render(<TransactionsList />);
     fireEvent.click(screen.getByText("table.showRecent"));
@@ -79,12 +125,25 @@ describe("TransactionsList component", () => {
     fireEvent.click(confirmBtn);
 
     expect(removeTransactionMock).toHaveBeenCalledWith("1");
-    expect(screen.queryByText("alerts.deleteTransaction")).not.toBeInTheDocument();
+    expect(
+      screen.queryByText("alerts.deleteTransaction")
+    ).not.toBeInTheDocument();
   });
 
   it("cancels delete modal", () => {
-    const transactions = [{ id: "1", type: "income", category: "salary", amount: 100, date: "2025-10-01" }];
-    useTransactionsMock.mockReturnValue({ transactions, removeTransaction: removeTransactionMock });
+    const transactions = [
+      {
+        id: "1",
+        type: "income",
+        category: "salary",
+        amount: 100,
+        date: "2025-10-01",
+      },
+    ];
+    useTransactionsMock.mockReturnValue({
+      transactions,
+      removeTransaction: removeTransactionMock,
+    });
 
     render(<TransactionsList />);
     fireEvent.click(screen.getByText("table.showRecent"));
@@ -96,6 +155,8 @@ describe("TransactionsList component", () => {
     fireEvent.click(cancelBtn);
 
     expect(removeTransactionMock).not.toHaveBeenCalled();
-    expect(screen.queryByText("alerts.deleteTransaction")).not.toBeInTheDocument();
+    expect(
+      screen.queryByText("alerts.deleteTransaction")
+    ).not.toBeInTheDocument();
   });
 });

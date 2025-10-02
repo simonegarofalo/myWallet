@@ -2,6 +2,13 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import Settings from "./settings";
 
+jest.mock("../hooks/useLang", () => ({
+  useLang: () => ({
+    switchLang: jest.fn(),
+    isReady: true,
+  }),
+}));
+
 jest.mock("react-i18next", () => ({
   useTranslation: () => ({
     t: (key: string) => key,

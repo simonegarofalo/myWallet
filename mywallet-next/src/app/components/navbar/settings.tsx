@@ -2,7 +2,8 @@
 
 import { useTheme } from "../../hooks/useTheme";
 import Image from "next/image";
-import LanguageSelector from "./languageSelector";
+import LanguageSelector from "../navbar/languageSelector";
+import { useLang } from "../../hooks/useLang";
 import ThemeSelector from "./themeSelector";
 
 export default function Settings({
@@ -12,9 +13,13 @@ export default function Settings({
   isOpen: boolean;
   onClose: () => void;
 }) {
+  const { isReady } = useLang();
   const { theme } = useTheme();
   const logo =
     theme === "light" ? "/light-mode-logo.svg" : "/dark-mode-logo.svg";
+
+  if (!isReady) return null;
+
   return (
     <div className={`settings-menu ${isOpen ? "" : "hidden"}`}>
       <div className="main-menu-wrapper">

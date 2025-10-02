@@ -2,12 +2,16 @@
 
 import { useTheme } from "../../hooks/useTheme";
 import { useTranslation } from "react-i18next";
+import { useLang } from "../../hooks/useLang";
 
 import Image from "next/image";
 
 export default function ThemeToggle() {
+  const { isReady } = useLang();
   const { t } = useTranslation();
   const { theme, toggleTheme } = useTheme();
+
+  if (!isReady) return null;
 
   return (
     <div className="setting-wrapper">

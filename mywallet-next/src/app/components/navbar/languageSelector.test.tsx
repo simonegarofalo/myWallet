@@ -11,9 +11,9 @@ jest.mock("react-i18next", () => ({
   }),
 }));
 
-jest.mock("../hooks/useLang");
+jest.mock("../../hooks/useLang");
 
-import { useLang } from "../hooks/useLang";
+import { useLang } from "../../hooks/useLang";
 
 describe("LanguageSelector", () => {
   const mockUseLang = useLang as jest.Mock;

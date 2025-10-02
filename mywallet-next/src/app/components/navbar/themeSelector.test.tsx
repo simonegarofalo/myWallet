@@ -1,8 +1,8 @@
 import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
-import ThemeToggle from "../components/themeSelector";
+import ThemeToggle from "../../components/navbar/themeSelector";
 
-jest.mock("../hooks/useTheme", () => ({
+jest.mock("../../hooks/useTheme", () => ({
   useTheme: jest.fn(),
 }));
 
@@ -10,7 +10,7 @@ jest.mock("react-i18next", () => ({
   useTranslation: () => ({ t: (key: string) => key }),
 }));
 
-import { useTheme } from "../hooks/useTheme";
+import { useTheme } from "../../hooks/useTheme";
 
 describe("ThemeToggle component", () => {
   it("renders the theme toggle button", () => {

@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import Navbar from "./navbar";
 
-jest.mock("../hooks/useTheme", () => ({
+jest.mock("../../hooks/useTheme", () => ({
   useTheme: jest.fn(),
 }));
 
@@ -17,7 +17,7 @@ jest.mock("./settings", () => (props: any) => (
 ));
 
 describe("Navbar component", () => {
-  const { useTheme } = jest.requireMock("../hooks/useTheme");
+  const { useTheme } = jest.requireMock("../../hooks/useTheme");
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -41,19 +41,27 @@ describe("Navbar component", () => {
   it("renders the light logo when theme=light", () => {
     (useTheme as jest.Mock).mockReturnValue({ theme: "light" });
     render(<Navbar />);
-    expect(screen.getByAltText("myWallet-logo")).toHaveAttribute("src", "/light-mode-logo.svg");
+    expect(screen.getByAltText("myWallet-logo")).toHaveAttribute(
+      "src",
+      "/light-mode-logo.svg"
+    );
   });
-  
+
   it("renders the dark logo when theme=dark", () => {
     (useTheme as jest.Mock).mockReturnValue({ theme: "dark" });
     render(<Navbar />);
-    expect(screen.getByAltText("myWallet-logo")).toHaveAttribute("src", "/dark-mode-logo.svg");
-  });  
+    expect(screen.getByAltText("myWallet-logo")).toHaveAttribute(
+      "src",
+      "/dark-mode-logo.svg"
+    );
+  });
 
   it("toggles notifications on click when supportsHover=false", () => {
     render(<Navbar />);
 
-    const notificationsIcon = screen.getByAltText("notifications-icon").closest("div")!;
+    const notificationsIcon = screen
+      .getByAltText("notifications-icon")
+      .closest("div")!;
     const notifications = screen.getByTestId("notifications");
 
     expect(notifications).toHaveAttribute("data-open", "false");

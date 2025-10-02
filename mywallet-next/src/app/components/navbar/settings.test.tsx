@@ -11,7 +11,7 @@ jest.mock("react-i18next", () => ({
   }),
 }));
 
-jest.mock("../hooks/useTheme", () => ({
+jest.mock("../../hooks/useTheme", () => ({
   useTheme: () => ({
     theme: "light",
   }),

@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useLang } from '../hooks/useLang';
-import { useTranslation } from 'react-i18next';
-import Image from 'next/image';
+import { useLang } from "../../hooks/useLang";
+import { useTranslation } from "react-i18next";
+import Image from "next/image";
 
 export default function LanguageSelector() {
   const { t } = useTranslation();
@@ -10,7 +10,7 @@ export default function LanguageSelector() {
 
   return (
     <div className="setting-wrapper">
-      <p>{t('buttons.languageSelection')}</p>
+      <p>{t("buttons.languageSelection")}</p>
       <div className="feature-wrapper">
         <Image
           src="/icons/uk.png"
@@ -18,7 +18,7 @@ export default function LanguageSelector() {
           className="lang-flag"
           width={40}
           height={40}
-          onClick={() => switchLang('en')}
+          onClick={() => switchLang("en")}
         />
         <Image
           src="/icons/it.png"
@@ -26,7 +26,7 @@ export default function LanguageSelector() {
           className="lang-flag"
           width={40}
           height={40}
-          onClick={() => switchLang('it')}
+          onClick={() => switchLang("it")}
         />
       </div>
     </div>
